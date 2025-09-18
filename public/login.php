@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <?php endif; ?>
 
-            <form id="loginForm" class="login-form" method="POST" action="index.php">
+            <form id="loginForm" class="login-form" method="POST" action="login.php">
                 <div class="form-group">
                     <label for="email">Correo Electrónico</label>
                     <div class="input-container">
