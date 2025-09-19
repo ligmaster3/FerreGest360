@@ -1,6 +1,28 @@
-CREATE DATABASE IF NOT EXISTS `ferregest360` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 22-06-2025 a las 01:53:01
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
-Use `ferregest360`;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
+START TRANSACTION;
+
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
+;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */
+;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */
+;
+/*!40101 SET NAMES utf8mb4 */
+;
+
+--
 -- Base de datos: `ferregest360`
 --
 
@@ -150,7 +172,7 @@ VALUES (
         30,
         5.00,
         1,
-        '2025-01-15 10:00:00'
+        '2025-01-15 15:00:00'
     ),
     (
         2,
@@ -167,7 +189,7 @@ VALUES (
         60,
         10.00,
         1,
-        '2025-01-16 11:00:00'
+        '2025-01-16 16:00:00'
     ),
     (
         3,
@@ -184,7 +206,7 @@ VALUES (
         15,
         0.00,
         1,
-        '2025-01-17 12:00:00'
+        '2025-01-17 17:00:00'
     ),
     (
         4,
@@ -201,7 +223,7 @@ VALUES (
         45,
         8.00,
         1,
-        '2025-01-18 13:00:00'
+        '2025-01-18 18:00:00'
     ),
     (
         5,
@@ -218,7 +240,7 @@ VALUES (
         20,
         3.00,
         1,
-        '2025-01-19 14:00:00'
+        '2025-01-19 19:00:00'
     );
 
 -- --------------------------------------------------------
@@ -422,11 +444,6 @@ VALUES (
         10.00
     );
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ordenes_compra`
---
 
 CREATE TABLE `ordenes_compra` (
     `id` int(11) NOT NULL,
@@ -499,6 +516,8 @@ VALUES (
         'Pedido de taladros para re-stock',
         '2025-01-12 10:30:00'
     );
+
+
 
 -- --------------------------------------------------------
 
@@ -587,7 +606,7 @@ VALUES (
         '507-123-4567',
         'info@ferreteriamartillo.com',
         NULL,
-        '2025-06-10 02:14:46',
+        '2025-06-10 07:14:46',
         1
     );
 
@@ -657,7 +676,7 @@ VALUES (
         156.75,
         'pagada',
         'Venta de herramientas',
-        '2025-01-15 10:30:00'
+        '2025-01-15 15:30:00'
     ),
     (
         2,
@@ -674,7 +693,7 @@ VALUES (
         1243.75,
         'pendiente',
         'Materiales de construcción',
-        '2025-01-16 11:45:00'
+        '2025-01-16 16:45:00'
     ),
     (
         3,
@@ -691,7 +710,7 @@ VALUES (
         82.13,
         'pagada',
         'Herramientas manuales',
-        '2025-01-17 12:15:00'
+        '2025-01-17 17:15:00'
     ),
     (
         4,
@@ -708,7 +727,7 @@ VALUES (
         862.75,
         'pendiente',
         'Productos de ferretería',
-        '2025-01-18 13:20:00'
+        '2025-01-18 18:20:00'
     ),
     (
         5,
@@ -725,7 +744,7 @@ VALUES (
         213.00,
         'vencida',
         'Pinturas y accesorios',
-        '2025-01-19 14:30:00'
+        '2025-01-19 19:30:00'
     ),
     (
         6,
@@ -742,7 +761,7 @@ VALUES (
         49.28,
         'pagada',
         'Repuestos varios',
-        '2025-01-20 09:15:00'
+        '2025-01-20 14:15:00'
     ),
     (
         7,
@@ -759,7 +778,7 @@ VALUES (
         1791.00,
         'pendiente',
         'Equipos eléctricos',
-        '2025-01-21 10:45:00'
+        '2025-01-21 15:45:00'
     ),
     (
         8,
@@ -776,7 +795,7 @@ VALUES (
         131.40,
         'pagada',
         'Herramientas de jardín',
-        '2025-01-22 11:30:00'
+        '2025-01-22 16:30:00'
     ),
     (
         9,
@@ -793,7 +812,7 @@ VALUES (
         659.75,
         'pendiente',
         'Materiales de plomería',
-        '2025-01-23 12:20:00'
+        '2025-01-23 17:20:00'
     ),
     (
         10,
@@ -810,7 +829,7 @@ VALUES (
         101.18,
         'anulada',
         'Accesorios eléctricos',
-        '2025-01-24 13:10:00'
+        '2025-01-24 18:10:00'
     );
 
 -- --------------------------------------------------------
@@ -847,7 +866,7 @@ VALUES (
         10,
         0,
         15.00,
-        '2025-06-10 02:14:46'
+        '2025-06-10 07:14:46'
     ),
     (
         2,
@@ -855,7 +874,7 @@ VALUES (
         25,
         0,
         3.50,
-        '2025-06-10 02:14:46'
+        '2025-06-10 07:14:46'
     ),
     (
         3,
@@ -863,7 +882,7 @@ VALUES (
         500,
         0,
         0.05,
-        '2025-06-10 02:14:46'
+        '2025-06-10 07:14:46'
     ),
     (
         4,
@@ -871,7 +890,7 @@ VALUES (
         5,
         0,
         25.00,
-        '2025-06-10 02:14:46'
+        '2025-06-10 07:14:46'
     ),
     (
         5,
@@ -879,7 +898,7 @@ VALUES (
         3,
         0,
         75.00,
-        '2025-06-10 02:14:46'
+        '2025-06-10 07:14:46'
     );
 
 -- --------------------------------------------------------
@@ -980,6 +999,560 @@ CREATE TABLE `movimientos_inventario` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `productos`
+--
+
+CREATE TABLE `productos` (
+    `id` int(11) NOT NULL,
+    `empresa_id` int(11) NOT NULL,
+    `codigo` varchar(50) NOT NULL,
+    `codigo_barras` varchar(50) DEFAULT NULL,
+    `nombre` varchar(200) NOT NULL,
+    `descripcion` text DEFAULT NULL,
+    `categoria_id` int(11) DEFAULT NULL,
+    `marca_id` int(11) DEFAULT NULL,
+    `unidad_medida_id` int(11) DEFAULT NULL,
+    `precio_compra` decimal(10, 2) DEFAULT 0.00,
+    `precio_venta` decimal(10, 2) NOT NULL,
+    `precio_mayoreo` decimal(10, 2) DEFAULT NULL,
+    `stock_minimo` int(11) DEFAULT 0,
+    `stock_maximo` int(11) DEFAULT 0,
+    `ubicacion` varchar(100) DEFAULT NULL,
+    `imagen_url` varchar(255) DEFAULT NULL,
+    `activo` tinyint(1) DEFAULT 1,
+    `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO
+    `productos` (
+        `id`,
+        `empresa_id`,
+        `codigo`,
+        `codigo_barras`,
+        `nombre`,
+        `descripcion`,
+        `categoria_id`,
+        `marca_id`,
+        `unidad_medida_id`,
+        `precio_compra`,
+        `precio_venta`,
+        `precio_mayoreo`,
+        `stock_minimo`,
+        `stock_maximo`,
+        `ubicacion`,
+        `imagen_url`,
+        `activo`,
+        `fecha_creacion`
+    )
+VALUES (
+        1,
+        1,
+        'MART001',
+        NULL,
+        'Martillo de garra 16oz',
+        'Martillo de garra Stanley 16 onzas',
+        1,
+        1,
+        1,
+        15.00,
+        25.00,
+        NULL,
+        5,
+        0,
+        NULL,
+        NULL,
+        1,
+        '2025-06-10 07:14:46'
+    ),
+    (
+        2,
+        1,
+        'DEST001',
+        NULL,
+        'Destornillador plano 6\"',
+        'Destornillador plano Stanley 6 pulgadas',
+        1,
+        1,
+        1,
+        3.50,
+        6.00,
+        NULL,
+        10,
+        0,
+        NULL,
+        NULL,
+        1,
+        '2025-06-10 07:14:46'
+    ),
+    (
+        3,
+        1,
+        'TORN001',
+        NULL,
+        'Tornillo 1/4\" x 2\"',
+        'Tornillo galvanizado 1/4 x 2 pulgadas',
+        2,
+        7,
+        15,
+        0.05,
+        0.10,
+        NULL,
+        100,
+        0,
+        NULL,
+        NULL,
+        1,
+        '2025-06-10 07:14:46'
+    ),
+    (
+        4,
+        1,
+        'PINB001',
+        '14949',
+        'Pintura blanca 1 galón',
+        'Pintura látex blanca interior/exterior',
+        6,
+        6,
+        11,
+        25.00,
+        45.00,
+        24.00,
+        3,
+        50,
+        'san andres',
+        'img.png',
+        0,
+        '2025-06-10 07:14:46'
+    ),
+    (
+        5,
+        1,
+        'TALA001',
+        NULL,
+        'Taladro eléctrico 1/2\"',
+        'Taladro eléctrico Black & Decker 1/2 pulgada',
+        1,
+        2,
+        1,
+        75.00,
+        125.00,
+        NULL,
+        2,
+        0,
+        NULL,
+        NULL,
+        1,
+        '2025-06-10 07:14:46'
+    ),
+    (
+        6,
+        1,
+        'P001',
+        NULL,
+        'Martillo de carpintero',
+        'Martillo con mango de fibra',
+        1,
+        1,
+        1,
+        0.00,
+        9.50,
+        NULL,
+        5,
+        50,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        7,
+        1,
+        'P002',
+        NULL,
+        'Destornillador plano',
+        'Destornillador de 6 pulgadas',
+        1,
+        2,
+        1,
+        0.00,
+        3.75,
+        NULL,
+        10,
+        100,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        8,
+        1,
+        'P003',
+        NULL,
+        'Bloque de concreto',
+        'Bloque 15x20x40 cm',
+        2,
+        NULL,
+        1,
+        0.00,
+        1.25,
+        NULL,
+        200,
+        2000,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        9,
+        1,
+        'P004',
+        NULL,
+        'Saco de cemento 42.5kg',
+        'Cemento Portland gris',
+        2,
+        4,
+        3,
+        5.00,
+        7.80,
+        250.00,
+        20,
+        200,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        10,
+        1,
+        'P005',
+        NULL,
+        'Galón de pintura blanca',
+        'Pintura base agua',
+        3,
+        5,
+        4,
+        0.00,
+        12.60,
+        NULL,
+        10,
+        100,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        11,
+        1,
+        'P006',
+        NULL,
+        'Cable eléctrico 10m',
+        'Cable de cobre calibre 12',
+        4,
+        4,
+        2,
+        0.00,
+        6.30,
+        NULL,
+        10,
+        100,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        12,
+        1,
+        'P007',
+        NULL,
+        'Lámpara LED 10W',
+        'Lámpara E27 luz blanca',
+        4,
+        5,
+        1,
+        0.00,
+        4.20,
+        NULL,
+        20,
+        200,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        13,
+        1,
+        'P008',
+        NULL,
+        'Tubo PVC 1 pulgada',
+        'Tubo de 3 metros',
+        5,
+        NULL,
+        2,
+        0.00,
+        2.70,
+        NULL,
+        50,
+        500,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        14,
+        1,
+        'P009',
+        NULL,
+        'Llave ajustable 10\"',
+        'Llave inglesa de acero',
+        1,
+        2,
+        1,
+        0.00,
+        8.45,
+        NULL,
+        10,
+        100,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        15,
+        1,
+        'P010',
+        NULL,
+        'Cinta aislante',
+        'Rollo de cinta negra 18mm',
+        4,
+        1,
+        1,
+        0.00,
+        1.15,
+        NULL,
+        30,
+        300,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        16,
+        1,
+        'P011',
+        NULL,
+        'Taladro eléctrico',
+        'Taladro 650W con maletín',
+        1,
+        3,
+        1,
+        0.00,
+        45.90,
+        NULL,
+        5,
+        50,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        17,
+        1,
+        'P012',
+        NULL,
+        'Rodillo para pintura',
+        'Rodillo de felpa 9\"',
+        3,
+        4,
+        1,
+        0.00,
+        2.60,
+        NULL,
+        15,
+        150,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        18,
+        1,
+        'P013',
+        NULL,
+        'Llave de tubo',
+        'Llave tipo Stillson 14\"',
+        5,
+        1,
+        1,
+        0.00,
+        11.50,
+        NULL,
+        8,
+        80,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        19,
+        1,
+        'P014',
+        NULL,
+        'Grifo metálico',
+        'Grifo de lavamanos cromado',
+        5,
+        NULL,
+        1,
+        0.00,
+        7.75,
+        NULL,
+        10,
+        100,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        20,
+        1,
+        'P015',
+        NULL,
+        'Cinta métrica 5m',
+        'Cuerpo metálico con freno',
+        1,
+        2,
+        1,
+        0.00,
+        3.85,
+        NULL,
+        20,
+        100,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        21,
+        1,
+        'P016',
+        NULL,
+        'Caja de clavos 1"',
+        'Clavos galvanizados',
+        2,
+        NULL,
+        1,
+        0.00,
+        4.00,
+        NULL,
+        30,
+        300,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        22,
+        1,
+        'P017',
+        NULL,
+        'Lija de agua 220',
+        'Hoja de lija fina',
+        3,
+        NULL,
+        1,
+        0.00,
+        0.90,
+        NULL,
+        100,
+        1000,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        23,
+        1,
+        'P018',
+        NULL,
+        'Juego de brocas',
+        'Brocas HSS 6 piezas',
+        1,
+        3,
+        1,
+        0.00,
+        6.80,
+        NULL,
+        10,
+        80,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        24,
+        1,
+        'P019',
+        NULL,
+        'Foco incandescente 60W',
+        'Rosca E27 luz cálida',
+        4,
+        5,
+        1,
+        0.00,
+        1.10,
+        NULL,
+        50,
+        300,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    ),
+    (
+        25,
+        1,
+        'P020',
+        NULL,
+        'Varilla corrugada',
+        'Varilla de acero 3/8" x 6m',
+        2,
+        NULL,
+        2,
+        0.00,
+        6.25,
+        NULL,
+        100,
+        1000,
+        NULL,
+        NULL,
+        1,
+        '2025-06-21 23:29:23'
+    );
+
+-- --------------------------------------------------------
+
+
+--
 -- Estructura de tabla para la tabla `pagos_facturas`
 --
 
@@ -1051,158 +1624,8 @@ VALUES (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `productos`
---
 
-CREATE TABLE `productos` (
-    `id` int(11) NOT NULL,
-    `empresa_id` int(11) NOT NULL,
-    `codigo` varchar(50) NOT NULL,
-    `codigo_barras` varchar(50) DEFAULT NULL,
-    `nombre` varchar(200) NOT NULL,
-    `descripcion` text DEFAULT NULL,
-    `categoria_id` int(11) DEFAULT NULL,
-    `marca_id` int(11) DEFAULT NULL,
-    `unidad_medida_id` int(11) DEFAULT NULL,
-    `precio_compra` decimal(10, 2) DEFAULT 0.00,
-    `precio_venta` decimal(10, 2) NOT NULL,
-    `precio_mayoreo` decimal(10, 2) DEFAULT NULL,
-    `stock_minimo` int(11) DEFAULT 0,
-    `stock_maximo` int(11) DEFAULT 0,
-    `ubicacion` varchar(100) DEFAULT NULL,
-    `imagen_url` varchar(255) DEFAULT NULL,
-    `activo` tinyint(1) DEFAULT 1,
-    `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `productos`
---
-
-INSERT INTO
-    `productos` (
-        `id`,
-        `empresa_id`,
-        `codigo`,
-        `codigo_barras`,
-        `nombre`,
-        `descripcion`,
-        `categoria_id`,
-        `marca_id`,
-        `unidad_medida_id`,
-        `precio_compra`,
-        `precio_venta`,
-        `precio_mayoreo`,
-        `stock_minimo`,
-        `stock_maximo`,
-        `ubicacion`,
-        `imagen_url`,
-        `activo`,
-        `fecha_creacion`
-    )
-VALUES (
-        1,
-        1,
-        'MART001',
-        NULL,
-        'Martillo de garra 16oz',
-        'Martillo de garra Stanley 16 onzas',
-        1,
-        1,
-        1,
-        15.00,
-        25.00,
-        NULL,
-        5,
-        0,
-        NULL,
-        NULL,
-        1,
-        '2025-06-10 02:14:46'
-    ),
-    (
-        2,
-        1,
-        'DEST001',
-        NULL,
-        'Destornillador plano 6\"',
-        'Destornillador plano Stanley 6 pulgadas',
-        1,
-        1,
-        1,
-        3.50,
-        6.00,
-        NULL,
-        10,
-        0,
-        NULL,
-        NULL,
-        1,
-        '2025-06-10 02:14:46'
-    ),
-    (
-        3,
-        1,
-        'TORN001',
-        NULL,
-        'Tornillo 1/4\" x 2\"',
-        'Tornillo galvanizado 1/4 x 2 pulgadas',
-        2,
-        7,
-        15,
-        0.05,
-        0.10,
-        NULL,
-        100,
-        0,
-        NULL,
-        NULL,
-        1,
-        '2025-06-10 02:14:46'
-    ),
-    (
-        4,
-        1,
-        'PINB001',
-        NULL,
-        'Pintura blanca 1 galón',
-        'Pintura látex blanca interior/exterior',
-        6,
-        6,
-        11,
-        25.00,
-        45.00,
-        NULL,
-        3,
-        0,
-        NULL,
-        NULL,
-        1,
-        '2025-06-10 02:14:46'
-    ),
-    (
-        5,
-        1,
-        'TALA001',
-        NULL,
-        'Taladro eléctrico 1/2\"',
-        'Taladro eléctrico Black & Decker 1/2 pulgada',
-        1,
-        2,
-        1,
-        75.00,
-        125.00,
-        NULL,
-        2,
-        0,
-        NULL,
-        NULL,
-        1,
-        '2025-06-10 02:14:46'
-    );
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `productos_proveedores`
@@ -1248,7 +1671,7 @@ VALUES (
         5,
         1,
         1,
-        '2025-01-15 10:00:00'
+        '2025-01-15 15:00:00'
     ),
     (
         2,
@@ -1260,7 +1683,7 @@ VALUES (
         5,
         1,
         1,
-        '2025-01-15 10:00:00'
+        '2025-01-15 15:00:00'
     ),
     (
         3,
@@ -1272,7 +1695,7 @@ VALUES (
         3,
         1,
         1,
-        '2025-01-15 10:00:00'
+        '2025-01-15 15:00:00'
     ),
     (
         4,
@@ -1284,7 +1707,7 @@ VALUES (
         7,
         1,
         1,
-        '2025-01-15 10:00:00'
+        '2025-01-15 15:00:00'
     ),
     (
         5,
@@ -1296,7 +1719,7 @@ VALUES (
         10,
         1,
         1,
-        '2025-01-15 10:00:00'
+        '2025-01-15 15:00:00'
     );
 
 -- --------------------------------------------------------
@@ -1342,6 +1765,7 @@ CREATE TABLE `proveedores` (
 --
 -- Volcado de datos para la tabla `proveedores`
 --
+
 INSERT INTO
     `proveedores` (
         `id`,
@@ -1395,7 +1819,7 @@ VALUES (
         'Herramientas, tornillos, materiales de construcción',
         'Proveedor confiable con entregas puntuales',
         1,
-        '2025-06-10 02:14:46'
+        '2025-06-10 07:14:46'
     );
 
 -- --------------------------------------------------------
@@ -1662,7 +2086,7 @@ VALUES (
         '0192023a7bbd73250516f069df18b500',
         'admin',
         '507-123-4567',
-        '2025-06-10 02:14:46',
+        '2025-06-10 07:14:46',
         NULL,
         1
     );
@@ -1799,8 +2223,8 @@ ADD KEY `idx_productos_proveedores_principal` (`es_principal`);
 --
 ALTER TABLE `proveedores`
 ADD PRIMARY KEY (`id`),
-ADD KEY `empresa_id` (`empresa_id`),
 ADD UNIQUE KEY `unique_empresa_ruc` (`empresa_id`, `ruc`),
+ADD KEY `empresa_id` (`empresa_id`),
 ADD KEY `idx_proveedores_nombre` (`nombre`),
 ADD KEY `idx_proveedores_activo` (`activo`);
 
@@ -1922,6 +2346,13 @@ AUTO_INCREMENT = 5;
 --
 ALTER TABLE `productos`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 26;
+
+--
+-- AUTO_INCREMENT de la tabla `productos_proveedores`
+--
+ALTER TABLE `productos_proveedores`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
 AUTO_INCREMENT = 6;
 
 --
@@ -1958,13 +2389,6 @@ AUTO_INCREMENT = 16;
 ALTER TABLE `usuarios`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
 AUTO_INCREMENT = 2;
-
---
--- AUTO_INCREMENT de la tabla `productos_proveedores`
---
-ALTER TABLE `productos_proveedores`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
-AUTO_INCREMENT = 6;
 
 --
 -- Restricciones para tablas volcadas
@@ -2056,6 +2480,14 @@ ADD CONSTRAINT `productos_ibfk_3` FOREIGN KEY (`marca_id`) REFERENCES `marcas` (
 ADD CONSTRAINT `productos_ibfk_4` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidades_medida` (`id`) ON DELETE SET NULL;
 
 --
+-- Filtros para la tabla `productos_proveedores`
+--
+ALTER TABLE `productos_proveedores`
+ADD CONSTRAINT `productos_proveedores_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `productos_proveedores_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `productos_proveedores_ibfk_3` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
@@ -2073,12 +2505,11 @@ ADD CONSTRAINT `secuencias_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empres
 ALTER TABLE `usuarios`
 ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE;
 
---
--- Filtros para la tabla `productos_proveedores`
---
-ALTER TABLE `productos_proveedores`
-ADD CONSTRAINT `productos_proveedores_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
-ADD CONSTRAINT `productos_proveedores_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
-ADD CONSTRAINT `productos_proveedores_ibfk_3` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`) ON DELETE CASCADE;
-
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
+;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
+;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
+;

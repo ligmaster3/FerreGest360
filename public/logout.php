@@ -13,5 +13,4 @@ if (isset($_COOKIE[session_name()])) {
 session_destroy();
 
 // Enviar respuesta JSON
-header('Content-Type: application/json');
-echo json_encode(['success' => true]);
+  header('Location: login.php');

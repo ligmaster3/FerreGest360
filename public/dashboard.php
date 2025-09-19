@@ -2,9 +2,35 @@
 require_once '../config/connection.php';
 session_start();
 
-// Verificar si el usuario está autenticado
+// Consultas para las tarjetas de estadísticas
+// 1. Ventas de Hoy
+$stmt_ventas_hoy = ejecutarConsulta("SELECT SUM(total) as total FROM facturas_venta WHERE DATE(fecha_factura) = CURDATE()");
+$ventas_hoy = $stmt_ventas_hoy->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
-// Obtener información del usuario
+// 2. Total de Productos
+$stmt_total_productos = ejecutarConsulta("SELECT COUNT(*) as total FROM productos WHERE activo = 1");
+$total_productos = $stmt_total_productos->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+// 3. Productos con Stock Bajo
+$stmt_stock_bajo = ejecutarConsulta("SELECT COUNT(*) as total FROM productos p JOIN inventario i ON p.id = i.producto_id WHERE i.stock_actual <= p.stock_minimo AND p.activo = 1");
+$total_stock_bajo = $stmt_stock_bajo->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+// 4. Total de Clientes
+$stmt_total_clientes = ejecutarConsulta("SELECT COUNT(*) as total FROM clientes WHERE activo = 1");
+$total_clientes = $stmt_total_clientes->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+// Consultas para las secciones de actividad reciente
+// 5. Lista de Productos con Stock Bajo
+$stmt_productos_stock_bajo = ejecutarConsulta("SELECT p.nombre, i.stock_actual as stock, p.stock_minimo FROM productos p JOIN inventario i ON p.id = i.producto_id WHERE i.stock_actual <= p.stock_minimo AND p.activo = 1 ORDER BY (i.stock_actual - p.stock_minimo) ASC LIMIT 5");
+$productos_stock_bajo = $stmt_productos_stock_bajo->fetchAll(PDO::FETCH_ASSOC);
+
+// 6. Ventas Recientes
+$stmt_ventas_recientes = ejecutarConsulta("SELECT f.numero_factura, c.nombre as cliente_nombre, f.total, f.fecha_factura 
+                           FROM facturas_venta f 
+                           JOIN clientes c ON f.cliente_id = c.id 
+                           ORDER BY f.fecha_factura DESC 
+                           LIMIT 5");
+$ventas_recientes = $stmt_ventas_recientes->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -38,7 +64,7 @@ session_start();
                             </div>
                             <div class="stat-content">
                                 <h3>Ventas Hoy</h3>
-                                <p class="stat-value">$1,250.50</p>
+                                <p class="stat-value">$<?php echo number_format($ventas_hoy, 2); ?></p>
                                 <span class="stat-change positive">+12%</span>
                             </div>
                         </div>
@@ -49,7 +75,7 @@ session_start();
                             </div>
                             <div class="stat-content">
                                 <h3>Total Productos</h3>
-                                <p class="stat-value">245</p>
+                                <p class="stat-value"><?php echo $total_productos; ?></p>
                                 <span class="stat-change neutral">Activos</span>
                             </div>
                         </div>
@@ -60,7 +86,7 @@ session_start();
                             </div>
                             <div class="stat-content">
                                 <h3>Stock Bajo</h3>
-                                <p class="stat-value">12</p>
+                                <p class="stat-value"><?php echo $total_stock_bajo; ?></p>
                                 <span class="stat-change negative">Crítico</span>
                             </div>
                         </div>
@@ -71,7 +97,7 @@ session_start();
                             </div>
                             <div class="stat-content">
                                 <h3>Clientes</h3>
-                                <p class="stat-value">89</p>
+                                <p class="stat-value"><?php echo $total_clientes; ?></p>
                                 <span class="stat-change positive">+5 nuevos</span>
                             </div>
                         </div>
@@ -109,51 +135,37 @@ session_start();
                         <div class="low-stock-alert">
                             <h3><i class="fas fa-exclamation-triangle"></i> Productos con Stock Bajo</h3>
                             <div class="alert-list">
-                                <div class="alert-item">
-                                    <span class="product-name">Martillo de garra 16oz</span>
-                                    <span class="stock-info">Stock: 2 | Mínimo: 5</span>
-                                    <span class="alert-badge critical">Crítico</span>
-                                </div>
-                                <div class="alert-item">
-                                    <span class="product-name">Pintura blanca 1 galón</span>
-                                    <span class="stock-info">Stock: 1 | Mínimo: 3</span>
-                                    <span class="alert-badge critical">Crítico</span>
-                                </div>
-                                <div class="alert-item">
-                                    <span class="product-name">Taladro eléctrico 1/2"</span>
-                                    <span class="stock-info">Stock: 1 | Mínimo: 2</span>
-                                    <span class="alert-badge critical">Crítico</span>
-                                </div>
+                                <?php if (count($productos_stock_bajo) > 0): ?>
+                                    <?php foreach ($productos_stock_bajo as $producto): ?>
+                                        <div class="alert-item">
+                                            <span class="product-name"><?php echo htmlspecialchars($producto['nombre']); ?></span>
+                                            <span class="stock-info">Stock: <?php echo $producto['stock']; ?> | Mínimo: <?php echo $producto['stock_minimo']; ?></span>
+                                            <span class="alert-badge critical">Crítico</span>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p>No hay productos con stock bajo.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
 
                         <div class="recent-sales">
                             <h3><i class="fas fa-shopping-cart"></i> Ventas Recientes</h3>
                             <div class="sales-list">
-                                <div class="sale-item">
-                                    <div class="sale-info">
-                                        <span class="invoice-number">F000001</span>
-                                        <span class="customer-name">Juan Pérez</span>
-                                    </div>
-                                    <div class="sale-amount">$125.50</div>
-                                    <div class="sale-time">hace 2 horas</div>
-                                </div>
-                                <div class="sale-item">
-                                    <div class="sale-info">
-                                        <span class="invoice-number">F000002</span>
-                                        <span class="customer-name">María González</span>
-                                    </div>
-                                    <div class="sale-amount">$89.25</div>
-                                    <div class="sale-time">hace 3 horas</div>
-                                </div>
-                                <div class="sale-item">
-                                    <div class="sale-info">
-                                        <span class="invoice-number">F000003</span>
-                                        <span class="customer-name">Carlos Rodríguez</span>
-                                    </div>
-                                    <div class="sale-amount">$267.80</div>
-                                    <div class="sale-time">hace 5 horas</div>
-                                </div>
+                                <?php if (count($ventas_recientes) > 0): ?>
+                                    <?php foreach ($ventas_recientes as $venta): ?>
+                                        <div class="sale-item">
+                                            <div class="sale-info">
+                                                <span class="invoice-number"><?php echo htmlspecialchars($venta['numero_factura']); ?></span>
+                                                <span class="customer-name"><?php echo htmlspecialchars($venta['cliente_nombre']); ?></span>
+                                            </div>
+                                            <div class="sale-amount">$<?php echo number_format($venta['total'], 2); ?></div>
+                                            <div class="sale-time"><?php echo date('h:i A', strtotime($venta['fecha_factura'])); ?></div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p>No hay ventas recientes hoy.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -165,7 +177,7 @@ session_start();
 
     <!-- Modals -->
     <?php include 'partials/modals.php'; ?>
-  
+
 </body>
 
 </html>

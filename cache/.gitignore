@@ -1,0 +1,12 @@
+# Archivos de cache del sistema FerreGest360
+# Este directorio contiene archivos temporales de cache
+
+# Ignorar todos los archivos de cache
+*.cache
+
+# Ignorar archivos temporales
+*.tmp
+*.temp
+
+# Mantener el directorio pero ignorar su contenido
+!.gitignore 

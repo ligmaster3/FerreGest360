@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +18,7 @@
                 <h1>FerreGest360</h1>
                 <p>Sistema de Gestión para Ferreterías</p>
             </div>
-            
+
             <form id="loginForm" class="login-form">
                 <div class="form-group">
                     <label for="email">Correo Electrónico</label>
@@ -26,7 +27,7 @@
                         <input type="email" id="email" name="email" required placeholder="tu@email.com">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="password">Contraseña</label>
                     <div class="input-container">
@@ -37,12 +38,12 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <button type="submit" class="login-btn">
                     <i class="fas fa-sign-in-alt"></i>
                     Iniciar Sesión
                 </button>
-                
+
             </form>
         </div>
     </div>
@@ -55,7 +56,7 @@
                 <i class="fas fa-tools"></i>
                 <span class="sidebar-title">FerreGest360</span>
             </div>
-            
+
             <div class="user-info">
                 <div class="user-avatar">
                     <i class="fas fa-user"></i>
@@ -65,7 +66,7 @@
                     <span class="user-role">Administrador</span>
                 </div>
             </div>
-            
+
             <ul class="nav-menu">
                 <li class="nav-item active" data-section="dashboard">
                     <a href="#" class="nav-link">
@@ -116,7 +117,7 @@
                     </a>
                 </li>
             </ul>
-            
+
             <div class="sidebar-footer">
                 <button class="logout-btn" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i>
@@ -138,7 +139,7 @@
                         <input type="text" placeholder="Buscar productos, clientes..." class="search-input">
                     </div>
                 </div>
-                
+
                 <div class="header-right">
                     <button class="notification-btn">
                         <i class="fas fa-bell"></i>
@@ -158,7 +159,7 @@
                         <h1>Dashboard</h1>
                         <p>Resumen general de tu ferretería</p>
                     </div>
-                    
+
                     <!-- Stats Cards -->
                     <div class="stats-grid">
                         <div class="stat-card revenue">
@@ -171,7 +172,7 @@
                                 <span class="stat-change positive">+12%</span>
                             </div>
                         </div>
-                        
+
                         <div class="stat-card products">
                             <div class="stat-icon">
                                 <i class="fas fa-boxes"></i>
@@ -182,7 +183,7 @@
                                 <span class="stat-change neutral">Activos</span>
                             </div>
                         </div>
-                        
+
                         <div class="stat-card stock">
                             <div class="stat-icon">
                                 <i class="fas fa-exclamation-triangle"></i>
@@ -193,7 +194,7 @@
                                 <span class="stat-change negative">Crítico</span>
                             </div>
                         </div>
-                        
+
                         <div class="stat-card clients">
                             <div class="stat-icon">
                                 <i class="fas fa-users"></i>
@@ -293,7 +294,7 @@
                             Agregar Producto
                         </button>
                     </div>
-                    
+
                     <div class="filters-bar">
                         <div class="filter-group">
                             <input type="text" placeholder="Buscar productos..." class="filter-input">
@@ -434,32 +435,32 @@
                     </div>
                 </section>
 
- <section id="clientes-content" class="content-section">
-    <div class="page-header">
-        <h1>Gestión de Clientes</h1>
-        <button class="btn-primary" onclick="showAddClientModal()">
-            <i class="fas fa-user-plus"></i>
-            Nuevo Cliente
-        </button>
-    </div>
+                <section id="clientes-content" class="content-section">
+                    <div class="page-header">
+                        <h1>Gestión de Clientes</h1>
+                        <button class="btn-primary" onclick="showAddClientModal()">
+                            <i class="fas fa-user-plus"></i>
+                            Nuevo Cliente
+                        </button>
+                    </div>
 
-    <div class="data-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Cédula</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
-                    <th>Dirección</th>
-                </tr>
-            </thead>
-            <tbody id="clientesTabla">
-                <!-- Aquí se cargan dinámicamente los clientes -->
-            </tbody>
-        </table>
-    </div>
-</section>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Cédula</th>
+                                    <th>Teléfono</th>
+                                    <th>Correo</th>
+                                    <th>Dirección</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientesTabla">
+                                <!-- Aquí se cargan dinámicamente los clientes -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
 
                 <section id="proveedores-content" class="content-section">
@@ -510,7 +511,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-           
+
             <form id="formCliente" class="modal-form">
                 <div class="form-row">
                     <div class="form-group">
@@ -522,17 +523,17 @@
                         <input type="text" id="productBarcode" name="productBarcode">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="productName">Nombre del Producto</label>
                     <input type="text" id="productName" name="productName" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="productDescription">Descripción</label>
                     <textarea id="productDescription" name="productDescription" rows="3"></textarea>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="productCategory">Categoría</label>
@@ -561,7 +562,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="purchasePrice">Precio de Compra</label>
@@ -572,7 +573,7 @@
                         <input type="number" id="salePrice" name="salePrice" step="0.01" min="0" required>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="minStock">Stock Mínimo</label>
@@ -583,7 +584,7 @@
                         <input type="number" id="initialStock" name="initialStock" min="0" value="0">
                     </div>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" onclick="closeModal('addProductModal')">
                         Cancelar
@@ -599,44 +600,44 @@
 
     <script>
         function showAddClientModal() {
-    document.getElementById('addClientModal').classList.remove('hidden');
-}
+            document.getElementById('addClientModal').classList.remove('hidden');
+        }
 
-function cargarClientes() {
-    // Envío del formulario de clientes con AJAX
-document.getElementById('formCliente').addEventListener('submit', function(e) {
-    e.preventDefault();
+        function cargarClientes() {
+            // Envío del formulario de clientes con AJAX
+            document.getElementById('formCliente').addEventListener('submit', function (e) {
+                e.preventDefault();
 
-    const form = e.target;
-    const datos = new FormData(form);
+                const form = e.target;
+                const datos = new FormData(form);
 
-    fetch('guardar_cliente.php', {
-        method: 'POST',
-        body: datos
-    })
-    .then(res => res.text())
-    .then(respuesta => {
-        alert(respuesta); // Muestra mensaje de guardado
-        closeModal('addClientModal');
-        form.reset();
-        cargarClientes(); // Recargar la tabla de clientes
-    })
-    .catch(err => {
-        alert("Error al guardar el cliente.");
-        console.error(err);
-    });
-});
+                fetch('guardar_cliente.php', {
+                    method: 'POST',
+                    body: datos
+                })
+                    .then(res => res.text())
+                    .then(respuesta => {
+                        alert(respuesta); // Muestra mensaje de guardado
+                        closeModal('addClientModal');
+                        form.reset();
+                        cargarClientes(); // Recargar la tabla de clientes
+                    })
+                    .catch(err => {
+                        alert("Error al guardar el cliente.");
+                        console.error(err);
+                    });
+            });
 
-    fetch('listar_clientes.php')
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById('clientesTabla').innerHTML = html;
+            fetch('listar_clientes.php')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('clientesTabla').innerHTML = html;
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarClientes();
         });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    cargarClientes();
-});
 
 
 
@@ -645,10 +646,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let sidebarCollapsed = false;
 
         // Inicialización
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             updateCurrentDate();
             setInterval(updateCurrentDate, 60000); // Actualizar cada minuto
-            
+
             // Event listeners
             setupNavigation();
             setupLoginForm();
@@ -657,12 +658,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Funciones de autenticación
         function setupLoginForm() {
             const loginForm = document.getElementById('loginForm');
-            loginForm.addEventListener('submit', function(e) {
+            loginForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
-                
+
                 // Simulación de login (en producción esto sería una llamada a la API)
                 if (email === 'admin@ferreteria.com' && password === 'hello') {
                     document.getElementById('loginScreen').classList.add('hidden');
@@ -682,7 +683,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleBtn = document.querySelector('.toggle-password i');
-            
+
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleBtn.className = 'fas fa-eye-slash';
@@ -696,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function setupNavigation() {
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
                     const section = this.dataset.section;
                     showSection(section);
@@ -708,17 +709,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Ocultar todas las secciones
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => section.classList.remove('active'));
-            
+
             // Mostrar la sección seleccionada
             const targetSection = document.getElementById(sectionName + '-content');
             if (targetSection) {
                 targetSection.classList.add('active');
             }
-            
+
             // Actualizar navegación activa
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
-            
+
             const activeNavItem = document.querySelector(`[data-section="${sectionName}"]`);
             if (activeNavItem) {
                 activeNavItem.classList.add('active');
@@ -728,9 +729,9 @@ document.addEventListener('DOMContentLoaded', () => {
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
-            
+
             sidebarCollapsed = !sidebarCollapsed;
-            
+
             if (sidebarCollapsed) {
                 sidebar.classList.add('collapsed');
                 mainContent.classList.add('expanded');
@@ -762,55 +763,199 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Cerrar modal al hacer clic fuera
-        window.addEventListener('click', function(e) {
+        window.addEventListener('click', function (e) {
             if (e.target.classList.contains('modal')) {
                 e.target.classList.add('hidden');
             }
         });
     </script>
     <div id="addClientModal" class="modal hidden">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-user-plus"></i> Registrar Cliente</h2>
-            <button class="modal-close" onclick="closeModal('addClientModal')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <form class="modal-form" method="POST" action="guardar_cliente.php">
-            <div class="form-group">
-                <label for="nombre">Nombre Completo</label>
-                <input type="text" id="nombre" name="nombre" required>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Registrar Cliente</h2>
+                <button class="modal-close" onclick="closeModal('addClientModal')">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <div class="form-row">
+            <form class="modal-form" method="POST" action="guardar_cliente.php">
                 <div class="form-group">
-                    <label for="cedula">Cédula</label>
-                    <input type="text" id="cedula" name="cedula">
+                    <label for="nombre">Nombre Completo</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cedula">Cédula</label>
+                        <input type="text" id="cedula" name="cedula">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" id="telefono" name="telefono">
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" id="telefono" name="telefono">
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" name="correo">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="correo">Correo</label>
-                <input type="email" id="correo" name="correo">
-            </div>
-            <div class="form-group">
-                <label for="direccion">Dirección</label>
-                <textarea id="direccion" name="direccion" rows="2"></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <textarea id="direccion" name="direccion" rows="2"></textarea>
+                </div>
 
-            <div class="modal-actions">
-                <button type="button" class="btn-secondary" onclick="closeModal('addClientModal')">
-                    Cancelar
-                </button>
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-save"></i> Guardar Cliente
-                </button>
-            </div>
-        </form>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('addClientModal')">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Guardar Cliente
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+
+
+
+    function verFactura(id) {
+    fetch(`ventas.php?action=get_factura_details&id=${id}`)
+    .then(response => response.json())
+    .then(data => {
+    if (data.error) {
+    alert(data.error);
+    return;
+    }
+    const body = document.getElementById('viewFacturaBody');
+
+    // Formateadores
+    const formatDate = (fecha) => fecha ? new Date(fecha).toLocaleDateString('es-PA') : '';
+    const formatCurrency = (valor) => `$${parseFloat(valor || 0).toFixed(2)}`;
+
+    // Encabezado y datos
+    const emisor = {
+    nombre: 'FerreGest360',
+    direccion: 'Dirección de la empresa',
+    nif: 'NIF/ID Empresa',
+    ciudad: 'Ciudad, País',
+    email: 'info@ferregest360.com'
+    };
+    const cliente = {
+    nombre: data.cliente_nombre || 'Cliente',
+    direccion: data.direccion || '',
+    cedula: data.cedula_ruc || '',
+    ciudad: '',
+    email: data.email || ''
+    };
+
+    // Tabla de productos
+    let itemsHtml = data.items.map(item => `
+    <tr>
+        <td class="py-2 text-center">${item.cantidad}</td>
+        <td class="py-2">${item.producto_nombre}</td>
+        <td class="py-2 text-right">${formatCurrency(item.precio_unitario)}</td>
+        <td class="py-2 text-right">${formatCurrency(item.subtotal)}</td>
+    </tr>`).join('');
+
+    // Totales
+    const subtotal = formatCurrency(data.subtotal_calc);
+    const descuento = formatCurrency(data.descuento_calc);
+    const itbms = formatCurrency(data.itbms_calc);
+    const total = formatCurrency(data.total_calc);
+
+    body.innerHTML = `
+    <div class="bg-white p-6 rounded shadow max-w-4xl mx-auto">
+        <!-- Encabezado -->
+        <div class="border-b pb-4 mb-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold">${emisor.nombre}</h2>
+                <div class="text-right">
+                    <p class="text-sm">${emisor.direccion}</p>
+                    <p class="text-sm">${emisor.ciudad}</p>
+                    <h1 class="text-xl font-bold text-blue-700">Factura</h1>
+                    <p><span class="font-semibold">Fecha de factura:</span> ${formatDate(data.fecha_factura)}</p>
+                    <p><span class="font-semibold">Número de factura:</span> ${data.numero_factura}</p>
+                    <p><span class="font-semibold">Fecha de vencimiento:</span> ${formatDate(data.fecha_vencimiento)}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Facturar/Enviar a -->
+        <div class="grid grid-cols-3 gap-4 text-sm mb-6">
+            <div>
+                <h2 class="font-bold text-blue-800 mb-1">${emisor.nombre}</h2>
+                <p><span class="font-semibold">Dirección:</span> ${emisor.direccion}</p>
+                <p><span class="font-semibold">NIF:</span> ${emisor.nif}</p>
+                <p><span class="font-semibold">CP y ciudad:</span> ${emisor.ciudad}</p>
+                <p><span class="font-semibold">Email:</span> ${emisor.email}</p>
+            </div>
+            
+            <div>
+                <h2 class="font-bold text-blue-800 mb-1">${cliente.nombre}</h2>
+                <p><span class="font-semibold">Dirección:</span> ${cliente.direccion}</p>
+                <p><span class="font-semibold">Cédula/RUC:</span> ${cliente.cedula}</p>
+                <p><span class="font-semibold">Ciudad:</span> ${cliente.ciudad}</p>
+                <p><span class="font-semibold">Email:</span> ${cliente.email}</p>
+            </div>
+        </div>
+
+        <!-- Detalle productos -->
+        <div class="border-t border-b py-4 mb-4">
+            <table class="w-full text-sm text-left mt-4">
+                <thead class="border-b">
+                    <tr>
+                        <th class="py-2">Cant.</th>
+                        <th class="py-2">Descripción</th>
+                        <th class="py-2 text-right">Precio Unitario</th>
+                        <th class="py-2 text-right">Importe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${itemsHtml}
+                </tbody>
+            </table>
+            <div class="text-right mt-4 text-sm">
+                <p><strong>Subtotal:</strong> ${subtotal}</p>
+                <p><strong>Descuento:</strong> ${descuento}</p>
+                <p><strong>ITBMS:</strong> ${itbms}</p>
+            </div>
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-xl font-bold">Total Factura</h3>
+                <p class="text-2xl font-bold">${total}</p>
+            </div>
+        </div>
+
+        <!-- Condiciones -->
+        <div class="text-sm mt-4">
+            <h4 class="font-semibold uppercase mb-1">Condiciones y forma de pago</h4>
+            <p>El pago se realizará en un plazo de 15 días</p>
+            <p class="mt-2">Banco Santander</p>
+            <p>IBAN: ES12 3456 7891</p>
+            <p>SWIFT/BIC: ABCDESM1XXX</p>
+        </div>
+
+        <!-- Firma -->
+        <div class="text-right mt-8">
+            <p class="italic">${data.vendedor_nombre || 'Vendedor'}</p>
+        </div>
+    </div>
+
+    `;
+    document.getElementById('view-numero-factura').innerText = data.numero_factura;
+    document.getElementById('viewFacturaModal').classList.remove('hidden');
+    });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
+
 </html>
