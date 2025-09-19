@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <?php if (isset($error)): ?>
-                <div class="alert error-message p-1">
+                <div class="alert alert-error p-1">
                     <i class="fas fa-exclamation-circle"></i>
                     <?php echo htmlspecialchars($error); ?>
                 </div>
