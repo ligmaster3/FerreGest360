@@ -2205,7 +2205,7 @@ body {
 }
 
 .error-message::before {
-  content: 'âš ';
+  content: '';
   font-size: 0.8rem;
 }
 
@@ -2841,6 +2841,7 @@ body {
   color: var(--text-secondary);
   font-weight: 500;
 }
+
 .stat-content p {
   color: var(--text-primary);
 }
