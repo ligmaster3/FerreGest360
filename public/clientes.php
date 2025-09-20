@@ -441,6 +441,7 @@ $clientes = obtenerClientesPaginados($empresa_id, $pagina_actual, $clientes_por_
 // Calcular estadísticas adicionales
 $clientes_con_deuda = $stats_deuda['clientes_con_deuda'] ?? 0;
 $deuda_total = $stats_deuda['deuda_total'] ?? 0;
+include 'partials/head.php';
 ?>
 
 <body>

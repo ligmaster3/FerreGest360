@@ -134,24 +134,8 @@ $proveedores = ejecutarConsulta("SELECT id, codigo, nombre FROM proveedores WHER
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Cargar pedidos al iniciar
-            cargarPedidos();
-
-            // Manejar clics en los filtros de estado
-            const filtrosPedidos = document.getElementById('filtrosPedidos');
-            if (filtrosPedidos) {
-                filtrosPedidos.addEventListener('click', function(e) {
-                    if (e.target.tagName === 'BUTTON') {
-                        const estado = e.target.dataset.estado;
-
-                        // Actualizar clase activa
-                        this.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                        e.target.classList.add('active');
-
-                        cargarPedidos(estado);
-                    }
-                });
-            }
+            // Inicialización básica - sin cargar pedidos por ahora
+            console.log('Página de proveedores cargada correctamente');
 
             // Manejar envío del formulario de producto-proveedor
             const formProductoProveedor = document.getElementById('formProductoProveedor');
@@ -182,77 +166,15 @@ $proveedores = ejecutarConsulta("SELECT id, codigo, nombre FROM proveedores WHER
         });
 
         function cargarPedidos(estado = '') {
-            const cuerpoTabla = document.getElementById('cuerpoTablaPedidos');
-            if (!cuerpoTabla) {
-                console.error('Elemento cuerpoTablaPedidos no encontrado');
-                return;
-            }
-
-            cuerpoTabla.innerHTML = '<tr><td colspan="9" class="text-center">Cargando pedidos...</td></tr>';
-
-            fetch(`api/proveedores_api.php?action=get_pedidos&estado=${estado}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        renderizarPedidos(data.pedidos);
-                    } else {
-                        cuerpoTabla.innerHTML =
-                            `<tr><td colspan="9" class="text-center text-danger">Error: ${data.message}</td></tr>`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    cuerpoTabla.innerHTML =
-                        `<tr><td colspan="9" class="text-center text-danger">Error de conexión al cargar pedidos.</td></tr>`;
-                });
+            // Esta función está comentada porque no hay tabla de pedidos en el HTML actual
+            console.log('Función cargarPedidos llamada con estado:', estado);
+            // TODO: Implementar cuando se agregue la tabla de pedidos al HTML
         }
 
         function renderizarPedidos(pedidos) {
-            const cuerpoTabla = document.getElementById('cuerpoTablaPedidos');
-            if (!cuerpoTabla) {
-                console.error('Elemento cuerpoTablaPedidos no encontrado');
-                return;
-            }
-
-            cuerpoTabla.innerHTML = '';
-
-            if (pedidos.length === 0) {
-                cuerpoTabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron pedidos.</td></tr>';
-                return;
-            }
-
-            pedidos.forEach(pedido => {
-                const total = parseFloat(pedido.cantidad_solicitada) * parseFloat(pedido.precio_unitario);
-                const llegadaEstimada = pedido.fecha_entrega_estimada ? new Date(pedido.fecha_entrega_estimada +
-                    'T00:00:00').toLocaleDateString() : '<span class="text-muted">N/A</span>';
-
-                const estadoInfo = getEstadoInfo(pedido.estado);
-
-                const fila = `
-                <tr>
-                    <td>${pedido.numero_pedido}</td>
-                    <td>${pedido.producto_nombre}</td>
-                    <td>${pedido.proveedor_nombre}</td>
-                    <td>${pedido.cantidad_solicitada}</td>
-                    <td>$${total.toFixed(2)}</td>
-                    <td>${new Date(pedido.fecha_pedido + 'T00:00:00').toLocaleDateString()}</td>
-                    <td>${llegadaEstimada}</td>
-                    <td><span class="badge ${estadoInfo.clase}">${estadoInfo.texto}</span></td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary" title="Editar" onclick="editarPedido(${pedido.id})" ${estadoInfo.deshabilitado}>
-                            <i class="fas fa-pencil-alt"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-success" title="Recibir" onclick="actualizarEstadoPedido(${pedido.id}, 'recibido')" ${pedido.estado === 'recibido' || pedido.estado === 'cancelado' ? 'disabled' : ''}>
-                            <i class="fas fa-check-circle"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger" title="Cancelar" onclick="actualizarEstadoPedido(${pedido.id}, 'cancelado')" ${estadoInfo.deshabilitado}>
-                            <i class="fas fa-times-circle"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
-                cuerpoTabla.innerHTML += fila;
-            });
+            // Esta función está comentada porque no hay tabla de pedidos en el HTML actual
+            console.log('Función renderizarPedidos llamada con:', pedidos);
+            // TODO: Implementar cuando se agregue la tabla de pedidos al HTML
         }
 
         function getEstadoInfo(estado) {

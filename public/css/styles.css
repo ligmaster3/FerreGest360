@@ -576,32 +576,8 @@ body {
   background: var(--primary-color);
 }
 
-.stat-card.revenue::before {
-  background: var(--success-color);
-}
 
-.stat-card.products::before {
-  background: var(--info-color);
-}
-
-.stat-card.stock::before {
-  background: var(--danger-color);
-}
-
-.stat-card.clients::before {
-  background: var(--accent-color);
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-medium);
-}
-
-.stat-card {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-lg);
-}
+/* Regla duplicada eliminada - ya está definida arriba */
 
 .stat-icon {
   width: 50px;
@@ -616,9 +592,26 @@ body {
   flex-shrink: 0;
 }
 
-.stat-content h3 {
+/* Colores específicos para cada tipo de tarjeta */
+.stat-card.revenue .stat-icon {
+  background: var(--success-color);
+}
+
+.stat-card.products .stat-icon {
+  background: var(--info-color);
+}
+
+.stat-card.stock .stat-icon {
+  background: var(--danger-color);
+}
+
+.stat-card.clients .stat-icon {
+  background: var(--accent-color);
+}
+
+.stat-content {
   margin: 0 0 var(--spacing-xs) 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-secondary);
   font-weight: var(--font-weight-normal);
 }
