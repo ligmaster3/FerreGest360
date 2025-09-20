@@ -314,9 +314,8 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                     <h1>Ventas</h1>
                     <p>Gestión de facturas y ventas</p>
                 </div>
-
-                <!-- Filtros mejorados -->
-                <div class="filters-bar bg-light rounded-lg shadow p-6 mb-6">
+ <!-- Filtros mejorados -->
+                <div class="filters-bar">
                     <form method="GET" action="" class="filter-form">
                         <div class="filter-group">
                             <input type="text" name="busqueda" value="<?php echo htmlspecialchars($busqueda); ?>"
@@ -382,7 +381,7 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                 <?php endif; ?>
 
                 <!-- Estadísticas -->
-                <div class="rounded-lg p-4 stats-grid">
+                <div class="stats-grid">
                     <div class="invecard">
                         <div class="stat-content">
                             <h3 class="text-primary text-center">Total Facturas</h3>
@@ -432,7 +431,7 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                 <?php endif; ?>
 
                 <!-- Tabla de ventas -->
-                <div class="bg-white rounded-lg shadow data-table">
+                <div class="data-table">
                     <div>
                         <table>
                             <thead>
@@ -495,10 +494,10 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                                             </div>
                                             <?php if ($venta['dias_vencimiento'] !== null): ?>
                                             <?php if ($venta['dias_vencimiento'] < 0): ?>
-                                            <div class="dias-vencido text-red-600">Vencida hace
+                                            <div class="dias-vencido">Vencida hace
                                                 <?php echo abs($venta['dias_vencimiento']); ?> días</div>
                                             <?php elseif ($venta['dias_vencimiento'] <= 7): ?>
-                                            <div class="dias-vencimiento text-orange-600">Vence en
+                                            <div class="dias-vencimiento">Vence en
                                                 <?php echo $venta['dias_vencimiento']; ?> días</div>
                                             <?php endif; ?>
                                             <?php endif; ?>
@@ -528,34 +527,33 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="action-buttons relative" x-data="{ open: false }">
-                                            <button @click="open = !open" class="btn-secondary px-3 py-1 rounded-md">
-                                                Acciones <i class="fas fa-chevron-down ml-1"></i>
-                                            </button>
-                                            <div x-show="open" @click.away="open = false"
-                                                class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20"
-                                                style="display: none;">
-                                                <a href="#" @click.prevent="verFactura(<?php echo $venta['id']; ?>)"
-                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                    <i class="fas fa-eye mr-2"></i>Ver Detalle
-                                                </a>
-                                                <?php if (in_array($venta['estado'], ['pendiente', 'vencida'])): ?>
-                                                <a href="#"
-                                                    @click.prevent="abrirModalPago(<?php echo $venta['id']; ?>, <?php echo $venta['total']; ?>)"
-                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                    <i class="fas fa-dollar-sign mr-2"></i>Registrar Pago
-                                                </a>
-                                                <a href="#"
-                                                    @click.prevent="anularFactura(<?php echo $venta['id']; ?>, '<?php echo htmlspecialchars($venta['numero_factura']); ?>')"
-                                                    class="block px-4 py-2 text-sm text-red-700 hover:bg-red-50">
-                                                    <i class="fas fa-times-circle mr-2"></i>Anular Factura
-                                                </a>
-                                                <?php endif; ?>
-                                                <a href="#"
-                                                    @click.prevent="imprimirFactura(<?php echo $venta['id']; ?>)"
-                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                    <i class="fas fa-print mr-2"></i>Imprimir
-                                                </a>
+                                        <div class="action-buttons">
+                                            <div class="dropdown">
+                                                <button class="btn-secondary px-3 py-1 rounded-md dropdown-toggle">
+                                                    Acciones <i class="fas fa-chevron-down ml-1"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a href="#" onclick="verFactura(<?php echo $venta['id']; ?>)"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-eye mr-2"></i>Ver Detalle
+                                                    </a>
+                                                    <?php if (in_array($venta['estado'], ['pendiente', 'vencida'])): ?>
+                                                    <a href="#"
+                                                        onclick="abrirModalPago(<?php echo $venta['id']; ?>, <?php echo $venta['total']; ?>)"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-dollar-sign mr-2"></i>Registrar Pago
+                                                    </a>
+                                                    <a href="#"
+                                                        onclick="anularFactura(<?php echo $venta['id']; ?>, '<?php echo htmlspecialchars($venta['numero_factura']); ?>')"
+                                                        class="dropdown-item text-danger">
+                                                        <i class="fas fa-times-circle mr-2"></i>Anular Factura
+                                                    </a>
+                                                    <?php endif; ?>
+                                                    <a href="#" onclick="imprimirFactura(<?php echo $venta['id']; ?>)"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-print mr-2"></i>Imprimir
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -569,7 +567,7 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
 
                 <!-- Paginación -->
                 <?php if ($total_paginas > 1): ?>
-                <div class="pagination-container mt-6">
+                <div class="pagination-container">
                     <nav class="pagination-nav">
                         <ul class="pagination-list">
                             <!-- Botón Anterior -->
@@ -629,8 +627,6 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
         </main>
     </div>
 
-    <?php include 'partials/modals.php'; ?>
-
     <!-- Modal para ver detalles de la factura -->
     <div id="viewFacturaModal" class="modal hidden">
         <div class="modal-content modal-large">
@@ -681,21 +677,88 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <!-- Modal de confirmación -->
+    <div id="confirmationModal" class="modal hidden">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2 id="confirmationTitle">Confirmar acción</h2>
+                <button class="modal-close" onclick="closeModal('confirmationModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmationMessage">¿Estás seguro de que quieres realizar esta acción?</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeModal('confirmationModal')">Cancelar</button>
+                <button type="button" class="btn-danger" id="confirmationConfirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notifications container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <script>
     // Funciones para manejo de modales
     function closeModal(modalId) {
         document.getElementById(modalId).classList.add('hidden');
     }
 
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+    }
+
+    function showToast(message, type = 'success') {
+        const toastContainer = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Remove toast after 5 seconds
+        setTimeout(() => {
+            toast.remove();
+        }, 5000);
+    }
+
+    function showConfirmationModal(title, message, confirmCallback) {
+        document.getElementById('confirmationTitle').textContent = title;
+        document.getElementById('confirmationMessage').textContent = message;
+        
+        const confirmBtn = document.getElementById('confirmationConfirm');
+        // Remove any existing event listeners
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        
+        newConfirmBtn.addEventListener('click', function() {
+            closeModal('confirmationModal');
+            confirmCallback();
+        });
+        
+        openModal('confirmationModal');
+    }
+
     function verFactura(id) {
+        // Show loading state
+        document.getElementById('viewFacturaBody').innerHTML = '<div class="spinner"></div>';
+        openModal('viewFacturaModal');
+        
         fetch(`ventas.php?action=get_factura_details&id=${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    alert(data.error);
+                    document.getElementById('viewFacturaBody').innerHTML = `
+                        <div class="text-center text-danger p-4">
+                            <i class="fas fa-exclamation-circle fa-3x mb-3"></i>
+                            <p>${data.error}</p>
+                        </div>
+                    `;
                     return;
                 }
+                
                 const body = document.getElementById('viewFacturaBody');
 
                 // Formateadores
@@ -726,101 +789,138 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
 
                 // Productos
                 let itemsHtml = data.items.map(item => `
-                <tr>
-                    <td class="text-center">${item.cantidad}</td>
-                    <td>${item.producto_nombre}</td>
-                    <td class="text-right">${formatCurrency(item.precio_unitario)}</td>
-                    <td class="text-right">${formatCurrency(item.subtotal)}</td>
-                </tr>
-            `).join('');
+                    <tr>
+                        <td class="text-center">${item.cantidad}</td>
+                        <td>${item.producto_nombre} (${item.codigo})</td>
+                        <td class="text-right">${formatCurrency(item.precio_unitario)}</td>
+                        <td class="text-right">${formatCurrency(item.subtotal)}</td>
+                    </tr>
+                `).join('');
+
+                // Pagos realizados
+                let pagosHtml = '';
+                if (data.pagos && data.pagos.length > 0) {
+                    pagosHtml = `
+                        <div class="mt-5">
+                            <h4 class="font-weight-bold mb-3">Pagos Realizados</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered small">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Monto</th>
+                                            <th>Forma de Pago</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${data.pagos.map(pago => `
+                                            <tr>
+                                                <td>${formatDate(pago.fecha_pago)}</td>
+                                                <td class="text-right">${formatCurrency(pago.monto)}</td>
+                                                <td>${pago.forma_pago}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
 
                 // HTML Final
                 body.innerHTML = `
-                <div class="container bg-white p-4 rounded shadow-sm small">
-                    <!-- Encabezado -->
-                    <div class="row mb-4">
-                        <div class="col-md-8">
-                            <h1 class="text-xl font-bold text-primary">Factura</h1>
-                            <h1 class="h5 mb-3">${emisor.nombre}</h1>
-                            <p><strong>Fecha de factura:</strong> ${formatDate(data.fecha_factura)}</p>
-                            <p><strong>Número de factura:</strong> ${data.numero_factura}</p>
-                            <p><strong>Fecha de vencimiento:</strong> ${formatDate(data.fecha_vencimiento)}</p>
+                    <div class="container bg-white p-4 rounded shadow-sm small">
+                        <!-- Encabezado -->
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <h1 class="text-xl font-bold text-primary">Factura</h1>
+                                <h1 class="h5 mb-3">${emisor.nombre}</h1>
+                                <p><strong>Fecha de factura:</strong> ${formatDate(data.fecha_factura)}</p>
+                                <p><strong>Número de factura:</strong> ${data.numero_factura}</p>
+                                <p><strong>Fecha de vencimiento:</strong> ${formatDate(data.fecha_vencimiento)}</p>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://tufactura.com/ver/${data.numero_factura}&size=100x100" alt="QR Factura" style="height: 100px;">
+                            </div>
                         </div>
-                        <div class="col-md-4 text-right">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://tufactura.com/ver/${data.numero_factura}&size=100x100" alt="QR Factura" style="height: 100px;">
+
+                        <!-- Datos de emisor y cliente -->
+                        <div class="row pt-4 border-top">
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-primary font-weight-bold mb-2">${emisor.nombre}</h5>
+                                <p><strong>Dirección:</strong> ${emisor.direccion}, ${emisor.ciudad}</p>
+                                <p><strong>NIF:</strong> ${emisor.nif}</p>
+                                <p><strong>Email:</strong> ${emisor.email}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-primary font-weight-bold mb-2">${cliente.nombre}</h5>
+                                <p><strong>Dirección:</strong> ${cliente.direccion}</p>
+                                <p><strong>Cédula/RUC:</strong> ${cliente.cedula}</p>
+                                <p><strong>Ciudad:</strong> ${cliente.ciudad}</p>
+                                <p><strong>Email:</strong> ${cliente.email}</p>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de productos -->
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered small">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center">Cantidad</th>
+                                        <th>Descripción</th>
+                                        <th class="text-right">Precio Unitario</th>
+                                        <th class="text-right">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${itemsHtml}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Totales -->
+                        <div class="text-right small mt-3">
+                            <p><strong>Subtotal:</strong> ${subtotal}</p>
+                            <p><strong>Descuento:</strong> ${descuento}</p>
+                            <p><strong>ITBMS:</strong> ${itbms}</p>
+                            <p class="h6 font-weight-bold pt-2">Total a pagar: ${total}</p>
+                        </div>
+
+                        ${pagosHtml}
+
+                        <!-- Condiciones -->
+                        <hr>
+                        <div class="text-sm mt-4">
+                            <h4 class="font-weight-bold mb-1">Condiciones y forma de pago</h4>
+                            <p>El pago se realizará en un plazo de 15 días</p>
+                            <p class="mt-2">Banco Santander</p>
+                            <p>IBAN: ES12 3456 7891</p>
+                            <p>SWIFT/BIC: ABCDESM1XXX</p>
+                        </div>
+
+                        <!-- Firma -->
+                        <div class="text-right mt-4">
+                            <p class="italic">${data.vendedor_nombre || 'Vendedor'}</p>
                         </div>
                     </div>
+                `;
 
-                    <!-- Datos de emisor y cliente -->
-                    <div class="row pt-4 border-top">
-                        <div class="col-md-6 mb-3">
-                            <h5 class="text-primary font-weight-bold mb-2">${emisor.nombre}</h5>
-                            <p><strong>Dirección:</strong> ${emisor.direccion}, ${emisor.ciudad}</p>
-                            <p><strong>NIF:</strong> ${emisor.nif}</p>
-                            <p><strong>Email:</strong> ${emisor.email}</p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h5 class="text-primary font-weight-bold mb-2">${cliente.nombre}</h5>
-                            <p><strong>Dirección:</strong> ${cliente.direccion}</p>
-                            <p><strong>Cédula/RUC:</strong> ${cliente.cedula}</p>
-                            <p><strong>Ciudad:</strong> ${cliente.ciudad}</p>
-                            <p><strong>Email:</strong> ${cliente.email}</p>
-                        </div>
-                    </div>
-
-                    <!-- Tabla de productos -->
-                    <div class="table-responsive mt-4">
-                        <table class="table table-bordered small">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th class="text-center">Cantidad</th>
-                                    <th>Descripción</th>
-                                    <th class="text-right">Precio Unitario</th>
-                                    <th class="text-right">Importe</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${itemsHtml}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Totales -->
-                    <div class="text-right small mt-3">
-                        <p><strong>Subtotal:</strong> ${subtotal}</p>
-                        <p><strong>Descuento:</strong> ${descuento}</p>
-                        <p><strong>ITBMS:</strong> ${itbms}</p>
-                        <p class="h6 font-weight-bold pt-2">Total a pagar: ${total}</p>
-                    </div>
-
-                    <!-- Condiciones -->
-                    <hr>
-                    <div class="text-sm mt-4">
-                        <h4 class="font-weight-bold mb-1">Condiciones y forma de pago</h4>
-                        <p>El pago se realizará en un plazo de 15 días</p>
-                        <p class="mt-2">Banco Santander</p>
-                        <p>IBAN: ES12 3456 7891</p>
-                        <p>SWIFT/BIC: ABCDESM1XXX</p>
-                    </div>
-
-                    <!-- Firma -->
-                    <div class="text-right mt-4">
-                        <p class="italic">${data.vendedor_nombre || 'Vendedor'}</p>
-                    </div>
-                </div>
-            `;
-
-                // Mostrar el modal
                 document.getElementById('view-numero-factura').innerText = data.numero_factura;
-                document.getElementById('viewFacturaModal').classList.remove('hidden');
+            })
+            .catch(error => {
+                document.getElementById('viewFacturaBody').innerHTML = `
+                    <div class="text-center text-danger p-4">
+                        <i class="fas fa-exclamation-circle fa-3x mb-3"></i>
+                        <p>Error al cargar los detalles de la factura: ${error.message}</p>
+                    </div>
+                `;
             });
     }
-
 
     function abrirModalPago(id, total) {
         document.getElementById('payment-factura-id').value = id;
         document.getElementById('payment-monto').value = total;
-        document.getElementById('registerPaymentModal').classList.remove('hidden');
+        openModal('registerPaymentModal');
     }
 
     function anularFactura(id, numero) {
@@ -834,13 +934,64 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
     }
 
     function imprimirFactura(id) {
-        alert('Funcionalidad de imprimir no implementada aún. ID: ' + id);
+        // First open the view modal
+        verFactura(id);
+        
+        // After a short delay, trigger print
+        setTimeout(() => {
+            window.print();
+        }, 1000);
     }
 
     function crearNuevaFactura() {
-        alert('Función de crear factura será implementada próximamente');
+        window.location.href = 'crear_factura.php';
     }
+
+    // Initialize dropdown menus
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const menu = this.nextElementSibling;
+                const isOpen = menu.style.display === 'block';
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.dropdown-menu').forEach(m => {
+                    m.style.display = 'none';
+                });
+                
+                // Toggle this dropdown
+                menu.style.display = isOpen ? 'none' : 'block';
+            });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        });
+        
+        // Prevent dropdowns from closing when clicking inside them
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+        
+        // Show any PHP messages as toasts
+        <?php if (isset($_SESSION['success_message'])): ?>
+            showToast('<?php echo $_SESSION['success_message']; ?>', 'success');
+            <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
+        
+        <?php if (isset($_SESSION['error_message'])): ?>
+            showToast('<?php echo $_SESSION['error_message']; ?>', 'error');
+            <?php unset($_SESSION['error_message']); ?>
+        <?php endif; ?>
+    });
     </script>
 </body>
-
 </html>

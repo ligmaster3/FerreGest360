@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $limite_credito = filter_var($_POST['limite_credito'], FILTER_VALIDATE_FLOAT, ['options' => ['default' => 0.0]]);
         $empresa_id = 1; // Asumiendo empresa_id=1
         $activo = 1; // Cliente activo por defecto
-
+        
         if (empty($nombre) || empty($cedula_ruc)) {
             throw new Exception("Nombre y Cédula/RUC son campos obligatorios.");
         }
@@ -710,6 +710,7 @@ include 'partials/head.php';
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
+
             </div>
         </main>
     </div>

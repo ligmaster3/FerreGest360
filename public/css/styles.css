@@ -1979,7 +1979,7 @@ body {
 }
 
 .checkbox-label input[type="checkbox"]:checked+.checkmark::after {
-  content: 'âœ“';
+  content: '✅';
   position: absolute;
   top: 50%;
   left: 50%;

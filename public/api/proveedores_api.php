@@ -19,7 +19,7 @@ try {
             $empresa_id = $_SESSION['empresa_id'] ?? 1;
             
             if (empty($producto_id) || empty($proveedor_id)) {
-                throw new Exception('Producto y proveedor son requeridos');
+                throw new Exception('Producto y proveedor son requeridos'); 
             }
             
             // Validar que el producto y proveedor pertenezcan a la empresa

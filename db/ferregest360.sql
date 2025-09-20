@@ -50,15 +50,26 @@ INSERT INTO `categorias` (`id`, `empresa_id`, `nombre`, `descripcion`, `parent_i
 (7, 1, 'Jardín', 'Artículos para jardín', NULL, 1);
 
 -- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `clientes`
+-- Estructura de tabla para la tabla `productos_proveedores`
+--
+
+CREATE TABLE `productos_proveedores` (
+    `empresa_id` int(11) NOT NULL,
+    `producto_id` int(11) NOT NULL,
+    `proveedor_id` int(11) NOT NULL,
+    `activo` tinyint(1) DEFAULT 1,
+    `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`empresas_id`, `producto_id`, `proveedor_id`),
+    FOREIGN KEY (`empresas`) REFERENCES `empresas` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`productos`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`proveedores`) REFERENCES `proveedores` (`id`) ON DELETE CASCADE
+);
 --
 
 CREATE TABLE `clientes` (
   `id` int(11) NOT NULL,
   `empresa_id` int(11) NOT NULL,
-  `codigo` varchar(20) DEFAULT NULL,
   `tipo_cliente` enum('natural','juridico') NOT NULL,
   `cedula_ruc` varchar(20) DEFAULT NULL,
   `nombre` varchar(150) NOT NULL,
@@ -77,12 +88,12 @@ CREATE TABLE `clientes` (
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `empresa_id`, `codigo`, `tipo_cliente`, `cedula_ruc`, `nombre`, `razon_social`, `direccion`, `telefono`, `email`, `limite_credito`, `dias_credito`, `descuento_porcentaje`, `activo`, `fecha_registro`) VALUES
-(1, 1, 'CLI001', 'natural', '8-123-456', 'Juan Pérez', NULL, 'Calle 1, Ciudad de Panamá', '507-123-4567', 'juan.perez@email.com', 1000.00, 30, 5.00, 1, '2025-01-15 15:00:00'),
-(2, 1, 'CLI002', 'juridico', '12345678-1-123456', 'Constructora ABC', 'Constructora ABC S.A.', 'Avenida Central 123', '507-234-5678', 'info@constructoraabc.com', 5000.00, 60, 10.00, 1, '2025-01-16 16:00:00'),
-(3, 1, 'CLI003', 'natural', '8-234-567', 'María González', NULL, 'Calle 2, San Miguelito', '507-345-6789', 'maria.gonzalez@email.com', 500.00, 15, 0.00, 1, '2025-01-17 17:00:00'),
-(4, 1, 'CLI004', 'juridico', '87654321-1-654321', 'Ferretería Central', 'Ferretería Central Ltda.', 'Zona Libre de Colón', '507-456-7890', 'ventas@ferreteriacentral.com', 3000.00, 45, 8.00, 1, '2025-01-18 18:00:00'),
-(5, 1, 'CLI005', 'natural', '8-345-678', 'Carlos Rodríguez', NULL, 'Calle 3, Arraiján', '507-567-8901', 'carlos.rodriguez@email.com', 750.00, 20, 3.00, 1, '2025-01-19 19:00:00');
+INSERT INTO `clientes` (`id`, `empresa_id`, `tipo_cliente`, `cedula_ruc`, `nombre`, `razon_social`, `direccion`, `telefono`, `email`, `limite_credito`, `dias_credito`, `descuento_porcentaje`, `activo`, `fecha_registro`) VALUES
+(1, 1, 'natural', '8-123-456', 'Juan Pérez', NULL, 'Calle 1, Ciudad de Panamá', '507-123-4567', 'juan.perez@email.com', 1000.00, 30, 5.00, 1, '2025-01-15 15:00:00'),
+(2, 1, 'juridico', '12345678-1-123456', 'Constructora ABC', 'Constructora ABC S.A.', 'Avenida Central 123', '507-234-5678', 'info@constructoraabc.com', 5000.00, 60, 10.00, 1, '2025-01-16 16:00:00'),
+(3, 1, 'natural', '8-234-567', 'María González', NULL, 'Calle 2, San Miguelito', '507-345-6789', 'maria.gonzalez@email.com', 500.00, 15, 0.00, 1, '2025-01-17 17:00:00'),
+(4, 1, 'juridico', '87654321-1-654321', 'Ferretería Central', 'Ferretería Central Ltda.', 'Zona Libre de Colón', '507-456-7890', 'ventas@ferreteriacentral.com', 3000.00, 45, 8.00, 1, '2025-01-18 18:00:00'),
+(5, 1, 'natural', '8-345-678', 'Carlos Rodríguez', NULL, 'Calle 3, Arraiján', '507-567-8901', 'carlos.rodriguez@email.com', 750.00, 20, 3.00, 1, '2025-01-19 19:00:00');
 
 -- --------------------------------------------------------
 
