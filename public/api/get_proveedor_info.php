@@ -1,46 +1,50 @@
 <?php
 require_once '../../config/connection.php';
-
 header('Content-Type: application/json');
 
-if (!isset($_GET['id'])) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'ID de proveedor requerido'
-    ]);
-    exit;
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
 
+$proveedor_id = $_GET['id'] ?? '';
+$empresa_id = $_SESSION['empresa_id'] ?? 1;
+
 try {
+    if (empty($proveedor_id)) {
+        throw new Exception('ID de proveedor requerido');
+    }
+    
     $conn = getDBConnection();
-    $proveedor_id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
-
-    if (!$proveedor_id) {
-        throw new Exception('ID de proveedor inválido');
-    }
-
-    $sql = "SELECT id, codigo, nombre, telefono_principal, email, dias_credito, descuento_porcentaje 
+    
+    // Obtener información completa del proveedor
+    $sql = "SELECT 
+                id, codigo, nombre, razon_social, tipo_proveedor, ruc,
+                direccion, telefono_principal, email, nombre_contacto, 
+                cargo_contacto, telefono_contacto, email_contacto,
+                dias_credito, descuento_porcentaje, tiempo_entrega, 
+                monto_minimo, condiciones_pago, sitio_web, 
+                horario_atencion, productos_principales, observaciones, 
+                activo, fecha_registro
             FROM proveedores 
-            WHERE id = ? AND activo = 1";
+            WHERE id = ? AND empresa_id = ?";
+    
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$proveedor_id]);
-
+    $stmt->execute([$proveedor_id, $empresa_id]);
     $proveedor = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($proveedor) {
-        echo json_encode([
-            'success' => true,
-            'proveedor' => $proveedor
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Proveedor no encontrado'
-        ]);
+    
+    if (!$proveedor) {
+        throw new Exception('Proveedor no encontrado');
     }
+    
+    echo json_encode([
+        'success' => true,
+        'proveedor' => $proveedor
+    ]);
+    
 } catch (Exception $e) {
     echo json_encode([
         'success' => false,
-        'message' => 'Error: ' . $e->getMessage()
+        'message' => $e->getMessage()
     ]);
 }
+?>
