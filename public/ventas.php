@@ -944,7 +944,7 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
     }
 
     function crearNuevaFactura() {
-        window.location.href = 'crear_factura.php';
+        window.location.href = 'ventas.php';
     }
 
     // Initialize dropdown menus

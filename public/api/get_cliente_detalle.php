@@ -1,6 +1,5 @@
 <?php
 require_once '../../config/connection.php';
-
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -16,18 +15,17 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $cliente_id = (int)$_GET['id'];
-$empresa_id = 1; // Asumiendo empresa_id = 1
+$empresa_id = 1;
 
 try {
     $conn = getDBConnection();
-
     $sql = "SELECT 
         id, codigo, tipo_cliente, cedula_ruc, nombre, razon_social, 
         direccion, telefono, email, limite_credito, dias_credito, 
         descuento_porcentaje, activo, fecha_registro
     FROM clientes 
     WHERE id = ? AND empresa_id = ?";
-
+    
     $stmt = $conn->prepare($sql);
     $stmt->execute([$cliente_id, $empresa_id]);
     $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -42,7 +40,4 @@ try {
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Error de base de datos: ' . $e->getMessage()]);
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Error interno: ' . $e->getMessage()]);
 }
