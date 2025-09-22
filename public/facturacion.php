@@ -52,26 +52,31 @@ if (isset($_GET['action'])) {
             }
             break;
             
-        case 'buscar_productos':
-            if (isset($_GET['q'])) {
-                $busqueda = '%' . $_GET['q'] . '%';
-                try {
-                    $sql = "SELECT id, codigo, nombre, precio_venta, stock_actual 
-                            FROM productos 
-                            WHERE (nombre LIKE ? OR codigo LIKE ?) 
-                            AND empresa_id = 1 AND activo = 1 AND stock_actual > 0 
-                            ORDER BY nombre 
-                            LIMIT 10";
-                    
-                    $stmt = ejecutarConsulta($sql, [$busqueda, $busqueda]);
-                    $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    
-                    echo json_encode(['success' => true, 'productos' => $productos]);
-                } catch (Exception $e) {
-                    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-                }
-            }
-            break;
+   case 'buscar_productos':
+    if (isset($_GET['q'])) {
+        $busqueda = '%' . $_GET['q'] . '%';
+        try {
+            $sql = "SELECT 
+                        p.id, 
+                        p.codigo, 
+                        p.nombre, 
+                        p.precio_venta,
+                        COALESCE(i.stock_actual, 0) as stock_actual
+                    FROM productos p
+                    LEFT JOIN inventario i ON p.id = i.producto_id
+                    WHERE (p.nombre LIKE ? OR p.codigo LIKE ?) 
+                    AND p.empresa_id = 1 
+                    AND p.activo = 1 
+                    ORDER BY p.nombre 
+                    LIMIT 10";
+            $stmt = ejecutarConsulta($sql, [$busqueda, $busqueda]);
+            $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode(['success' => true, 'productos' => $productos]);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+    break;
             
         case 'obtener_producto':
             if (isset($_GET['id'])) {
@@ -233,8 +238,8 @@ include 'partials/head.php';
 
 <body>
     <div id="dashboardScreen" class="dashboard-container">
-        <?php include 'partials/sidebar.php'; ?>
-        <main class="main-content">
+       
+        <main class="">
             <?php include 'partials/header.php'; ?>
             <div class="content-area">
                 <div class="page-header">
@@ -619,7 +624,7 @@ include 'partials/head.php';
             const resultsDiv = document.getElementById(`results_${rowId}`);
             
             try {
-                const response = await fetch(`?action=buscar_productos&q=`);
+                const response = await fetch(`?action=buscar_productos&q=${encodeURIComponent(query)}`);
                 const data = await response.json();
                 
                 if (data.success && data.productos.length > 0) {
