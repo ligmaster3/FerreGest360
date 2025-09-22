@@ -102,99 +102,90 @@ if (isset($_GET['action'])) {
             }
             break;
             
-        case 'guardar_factura':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $conn = getDBConnection();
-                $input = json_decode(file_get_contents('php://input'), true);
-                
-                try {
-                    // Validar datos requeridos
-                    $required = ['empresa_id', 'vendedor_id', 'cliente_id', 'fecha_factura', 'tipo_pago', 'subtotal', 'total'];
-                    foreach ($required as $field) {
-                        if (!isset($input[$field]) || empty($input[$field])) {
-                            throw new Exception("El campo $field es requerido");
-                        }
-                    }
-                    
-                    // Validar productos
-                    if (!isset($input['productos']) || empty($input['productos'])) {
-                        throw new Exception("Debe agregar al menos un producto");
-                    }
-                    
-                    $productos = $input['productos'];
-                    
-                    $conn->beginTransaction();
-                    
-                    // Generar número de factura
-                    $numero_factura = generarNumeroFactura($conn);
-                    
-                    // Insertar factura
-                    $sql_factura = "INSERT INTO facturas_venta 
-                                    (empresa_id, numero_factura, cliente_id, vendedor_id, fecha_factura, 
-                                     fecha_vencimiento, tipo_pago, subtotal, descuento, itbms, total, 
-                                     estado, observaciones) 
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    
-                    $estado = isset($input['estado']) && $input['estado'] === 'borrador' ? 'borrador' : 'pendiente';
-                    
-                    $params_factura = [
-                        $input['empresa_id'],
-                        $numero_factura,
-                        $input['cliente_id'],
-                        $input['vendedor_id'],
-                        $input['fecha_factura'],
-                        $input['fecha_vencimiento'] ?? null,
-                        $input['tipo_pago'],
-                        $input['subtotal'],
-                        $input['descuento'] ?? 0,
-                        $input['itbms'] ?? 0,
-                        $input['total'],
-                        $estado,
-                        $input['observaciones'] ?? null
-                    ];
-                    
-                    $stmt = ejecutarConsulta($sql_factura, $params_factura);
-                    $factura_id = $conn->lastInsertId();
-                    
-                    // Insertar detalles de factura
-                    $sql_detalle = "INSERT INTO detalle_facturas_venta 
-                                    (factura_id, producto_id, cantidad, precio_unitario, descuento, subtotal) 
-                                    VALUES (?, ?, ?, ?, ?, ?)";
-                    
-                    foreach ($productos as $producto) {
-                        $params_detalle = [
-                            $factura_id,
-                            $producto['id'],
-                            $producto['cantidad'],
-                            $producto['precio'],
-                            $producto['descuento'],
-                            $producto['subtotal'] - $producto['descuento']
-                        ];
-                        
-                        ejecutarConsulta($sql_detalle, $params_detalle);
-                        
-                        // Actualizar stock si la factura no es borrador
-                        if ($estado !== 'borrador') {
-                            $sql_update_stock = "UPDATE productos SET stock_actual = stock_actual - ? WHERE id = ?";
-                            ejecutarConsulta($sql_update_stock, [$producto['cantidad'], $producto['id']]);
-                        }
-                    }
-                    
-                    $conn->commit();
-                    
-                    echo json_encode([
-                        'success' => true, 
-                        'message' => 'Factura guardada correctamente',
-                        'factura_id' => $factura_id,
-                        'numero_factura' => $numero_factura
-                    ]);
-                    
-                } catch (Exception $e) {
-                    $conn->rollBack();
-                    echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+case 'guardar_factura':
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $conn = getDBConnection();
+        $input = json_decode(file_get_contents('php://input'), true);
+        try {
+            // Validar datos requeridos
+            $required = ['empresa_id', 'vendedor_id', 'cliente_id', 'fecha_factura', 'tipo_pago', 'subtotal', 'total'];
+            foreach ($required as $field) {
+                if (!isset($input[$field]) || empty($input[$field])) {
+                    throw new Exception("El campo $field es requerido");
                 }
             }
-            break;
+            // Validar productos
+            if (!isset($input['productos']) || empty($input['productos'])) {
+                throw new Exception("Debe agregar al menos un producto");
+            }
+            $productos = $input['productos'];
+            $conn->beginTransaction();
+            // Generar número de factura
+            $numero_factura = generarNumeroFactura($conn);
+            // Insertar factura
+            $sql_factura = "INSERT INTO facturas_venta 
+                            (empresa_id, numero_factura, cliente_id, vendedor_id, fecha_factura, 
+                             fecha_vencimiento, tipo_pago, subtotal, descuento, itbms, total, 
+                             estado, observaciones) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $estado = isset($input['estado']) && $input['estado'] === 'borrador' ? 'borrador' : 'pendiente';
+            $params_factura = [
+                $input['empresa_id'],
+                $numero_factura,
+                $input['cliente_id'],
+                $input['vendedor_id'],
+                $input['fecha_factura'],
+                $input['fecha_vencimiento'] ?? null,
+                $input['tipo_pago'],
+                $input['subtotal'],
+                $input['descuento'] ?? 0,
+                $input['itbms'] ?? 0,
+                $input['total'],
+                $estado,
+                $input['observaciones'] ?? null
+            ];
+            $stmt_factura = $conn->prepare($sql_factura);
+            $stmt_factura->execute($params_factura);
+            $factura_id = $conn->lastInsertId();
+            // Insertar detalles de factura
+            $sql_detalle = "INSERT INTO detalle_facturas_venta 
+                            (factura_id, producto_id, cantidad, precio_unitario, descuento, subtotal) 
+                            VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt_detalle = $conn->prepare($sql_detalle);
+            foreach ($productos as $producto) {
+                $params_detalle = [
+                    $factura_id,
+                    $producto['id'],
+                    $producto['cantidad'],
+                    $producto['precio'],
+                    $producto['descuento'],
+                    $producto['subtotal'] // <-- Aquí estaba el error: no debes restar el descuento aquí, ya que 'subtotal' ya es el total de la línea.
+                ];
+                $stmt_detalle->execute($params_detalle);
+                // Actualizar stock si la factura no es borrador
+                if ($estado !== 'borrador') {
+                    // ¡¡¡ IMPORTANTE !!! El stock está en la tabla 'inventario', no en 'productos'
+                    $sql_update_stock = "UPDATE inventario SET stock_actual = stock_actual - ? WHERE producto_id = ?";
+                    $stmt_stock = $conn->prepare($sql_update_stock);
+                    $stmt_stock->execute([$producto['cantidad'], $producto['id']]);
+                }
+            }
+            $conn->commit();
+            echo json_encode([
+                'success' => true, 
+                'message' => 'Factura guardada correctamente',
+                'factura_id' => $factura_id,
+                'numero_factura' => $numero_factura
+            ]);
+        } catch (Exception $e) {
+            if ($conn->inTransaction()) {
+                $conn->rollBack();
+            }
+            error_log("Error al guardar factura: " . $e->getMessage());
+            echo json_encode(['success' => false, 'message' => 'Error interno del servidor.']);
+        }
+    }
+    break;
     }
     exit;
 }
@@ -215,7 +206,7 @@ function generarNumeroFactura($conn) {
             return "F-" . date('Y') . "-001-" . str_pad($secuencial, 5, '0', STR_PAD_LEFT);
         } else {
             // Primera factura
-            return "F-" . date('Y') . "-001-00001";
+            return "F-" . date('Y') . "-001-0001";
         }
     } catch (Exception $e) {
         // En caso de error, generar número basado en timestamp
