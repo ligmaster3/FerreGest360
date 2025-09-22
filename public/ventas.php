@@ -9,6 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // ============================================================================
 
 // --- Acción para obtener detalles de una factura (AJAX) ---
+
 if (isset($_GET['action']) && $_GET['action'] === 'get_factura_details' && isset($_GET['id'])) {
     header('Content-Type: application/json');
     $id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
@@ -17,42 +18,65 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_factura_details' && isset
         exit;
     }
 
-    // Consulta principal de la factura
-    $sql_factura = "SELECT fv.*, c.nombre as cliente_nombre, c.cedula_ruc, c.direccion, u.nombre as vendedor_nombre, u.apellido as vendedor_apellido FROM facturas_venta fv LEFT JOIN clientes c ON fv.cliente_id = c.id LEFT JOIN usuarios u ON fv.vendedor_id = u.id WHERE fv.id = ?";
-    $factura = ejecutarConsulta($sql_factura, [$id])->fetch(PDO::FETCH_ASSOC);
+    try {
+        $conn = getDBConnection();
 
-    if (!$factura) {
-        echo json_encode(['error' => 'Factura no encontrada']);
+        // Consulta principal de la factura
+        $sql_factura = "SELECT fv.*, c.nombre as cliente_nombre, c.cedula_ruc, c.direccion, u.nombre as vendedor_nombre, u.apellido as vendedor_apellido FROM facturas_venta fv LEFT JOIN clientes c ON fv.cliente_id = c.id LEFT JOIN usuarios u ON fv.vendedor_id = u.id WHERE fv.id = ?";
+        $stmt_factura = $conn->prepare($sql_factura);
+        $stmt_factura->execute([$id]);
+        $factura = $stmt_factura->fetch(PDO::FETCH_ASSOC);
+
+        if (!$factura) {
+            echo json_encode(['error' => 'Factura no encontrada']);
+            exit;
+        }
+
+        // Consulta de items de la factura
+        $sql_items = "SELECT 
+                        dfv.cantidad,
+                        dfv.precio_unitario,
+                        dfv.subtotal,
+                        p.nombre as producto_nombre, 
+                        p.codigo as producto_codigo
+                      FROM detalle_facturas_venta dfv 
+                      JOIN productos p ON dfv.producto_id = p.id 
+                      WHERE dfv.factura_id = ?";
+        $stmt_items = $conn->prepare($sql_items);
+        $stmt_items->execute([$id]);
+        $factura['items'] = $stmt_items->fetchAll(PDO::FETCH_ASSOC);
+
+        // Consulta de pagos
+        $sql_pagos = "SELECT * FROM pagos_facturas WHERE factura_id = ?";
+        $stmt_pagos = $conn->prepare($sql_pagos);
+        $stmt_pagos->execute([$id]);
+        $factura['pagos'] = $stmt_pagos->fetchAll(PDO::FETCH_ASSOC);
+
+        // Calcular totales desde los items (por si los globales no están correctos)
+        $subtotal = 0;
+        $descuento = 0;
+        foreach ($factura['items'] as $item) {
+            $subtotal += $item['subtotal'];
+            // Asegúrate de que 'descuento' exista en la tabla detalle_facturas_venta
+            $descuento += $item['descuento'] ?? 0;
+        }
+        $itbms = $factura['itbms'] ?? 0;
+        $total = $subtotal - $descuento + $itbms;
+
+        $factura['subtotal_calc'] = $subtotal;
+        $factura['descuento_calc'] = $descuento;
+        $factura['itbms_calc'] = $itbms;
+        $factura['total_calc'] = $total;
+
+        echo json_encode($factura);
+        exit;
+
+    } catch (PDOException $e) {
+        error_log("Error en get_factura_details: " . $e->getMessage());
+        echo json_encode(['error' => 'Error interno del servidor']);
         exit;
     }
-
-    // Consulta de items de la factura
-    $sql_items = "SELECT dfv.*, p.nombre as producto_nombre, p.codigo FROM detalle_facturas_venta dfv JOIN productos p ON dfv.producto_id = p.id WHERE dfv.factura_id = ?";
-    $factura['items'] = ejecutarConsulta($sql_items, [$id])->fetchAll(PDO::FETCH_ASSOC);
-
-    // Consulta de pagos
-    $sql_pagos = "SELECT * FROM pagos_facturas WHERE factura_id = ?";
-    $factura['pagos'] = ejecutarConsulta($sql_pagos, [$id])->fetchAll(PDO::FETCH_ASSOC);
-
-    // Calcular totales desde los items (por si los globales no están correctos)
-    $subtotal = 0;
-    $descuento = 0;
-    foreach ($factura['items'] as $item) {
-        $subtotal += $item['subtotal'];
-        $descuento += $item['descuento'];
-    }
-    $itbms = isset($factura['itbms']) ? $factura['itbms'] : 0;
-    $total = $subtotal - $descuento + $itbms;
-
-    $factura['subtotal_calc'] = $subtotal;
-    $factura['descuento_calc'] = $descuento;
-    $factura['itbms_calc'] = $itbms;
-    $factura['total_calc'] = $total;
-
-    echo json_encode($factura);
-    exit;
 }
-
 // --- Acción para registrar un pago (POST) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'registrar_pago') {
     $conn = getDBConnection();
@@ -315,8 +339,8 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                     <p>Gestión de facturas y ventas</p>
                 </div>
                 <button class="btn-primary" onclick="crearNuevaFactura()">
-                            <i class="fas fa-plus"></i> Crear Nueva Factura
-                        </button>
+                        <i class="fas fa-plus"></i> Crear Nueva Factura
+                </button>
                 <!-- Filtros mejorados -->
                 <div class="filters-bar">
                     <form method="GET" action="" class="filter-form">
@@ -432,7 +456,56 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                     </div>
                 </div>
                 <?php endif; ?>
+<style>
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top:-130px;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1100 !important;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .container.font-bold {
+    font-weight: 700;
+    font-style:bold;
+  }
+  .container,strong,p{
+    color: #000000ff;
+  }
 
+.data-table {
+    position: relative;
+    z-index: 0;
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.data-table table {
+    width: 100%;
+    border-collapse: all;
+}
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+.data-table th {
+    font-weight: 600;
+}
+
+
+</style>
                 <!-- Tabla de ventas -->
                 <div class="data-table">
                     <div>
@@ -532,8 +605,8 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                                     <td>
                                         <div class="action-buttons">
                                             <div class="dropdown">
-                                                <button class="btn-secondary px-3 py-1 rounded-md dropdown-toggle">
-                                                    Acciones <i class="fas fa-chevron-down ml-1"></i>
+                                                <button class="btn-secondary px-2 py-1 rounded-md dropdown-toggle">
+                                                    Acciones 
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <a href="#" onclick="verFactura(<?php echo $venta['id']; ?>)"
@@ -850,13 +923,13 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                         <!-- Datos de emisor y cliente -->
                         <div class="row pt-4 border-top">
                             <div class="col-md-6 mb-3">
-                                <h5 class="text-primary font-weight-bold mb-2">${emisor.nombre}</h5>
+                                <h5 class="text-primary font-bold mb-2">${emisor.nombre}</h5>
                                 <p><strong>Dirección:</strong> ${emisor.direccion}, ${emisor.ciudad}</p>
                                 <p><strong>NIF:</strong> ${emisor.nif}</p>
                                 <p><strong>Email:</strong> ${emisor.email}</p>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <h5 class="text-primary font-weight-bold mb-2">${cliente.nombre}</h5>
+                                <h5 class="text-primary font-bold mb-2">${cliente.nombre}</h5>
                                 <p><strong>Dirección:</strong> ${cliente.direccion}</p>
                                 <p><strong>Cédula/RUC:</strong> ${cliente.cedula}</p>
                                 <p><strong>Ciudad:</strong> ${cliente.ciudad}</p>
@@ -947,7 +1020,7 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
     }
 
     function crearNuevaFactura() {
-        window.location.href = 'ventas.php';
+        window.location.href = 'facturacion.php';
     }
 
     // Initialize dropdown menus

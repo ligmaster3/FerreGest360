@@ -552,7 +552,7 @@ $dias_semana_json = json_encode($dias_semana);
                                             <tr>
                                                 <td>
                                                     <span
-                                                        class="badge bg-primary"><?php echo htmlspecialchars($venta['numero_factura']); ?></span>
+                                                        class="badge bg-black"><?php echo htmlspecialchars($venta['numero_factura']); ?></span>
                                                 </td>
                                                 <td>
                                                     <div>

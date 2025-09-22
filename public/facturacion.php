@@ -386,21 +386,22 @@ include 'partials/head.php';
     <style>
         .search-results {
             position: absolute;
-            top: 100%;
+            top: 120%;
             left: 0;
             right: 0;
             background: white;
             border: 1px solid #ddd;
             border-radius: 0 0 6px 6px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 100;
+            z-index: 1000;
             max-height: 200px;
             overflow-y: auto;
             display: none;
         }
         
         .search-result-item {
-            padding: 10px 15px;
+            margin: auto;
+            padding: 15px 15px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
         }
