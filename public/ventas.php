@@ -322,7 +322,7 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                                 placeholder="Número factura, Cliente, Cédula..." class="filter-input"
                                 style="flex-grow: 1;">
 
-                            <select name="cliente" class="filter-select">
+                            <!-- <select name="cliente" class="filter-select">
                                 <option value="">Todos los clientes</option>
                                 <?php foreach ($clientes as $cliente): ?>
                                 <option value="<?php echo $cliente['id']; ?>"
@@ -330,7 +330,7 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                                     <?php echo htmlspecialchars($cliente['nombre'] . ' (' . $cliente['cedula_ruc'] . ')'); ?>
                                 </option>
                                 <?php endforeach; ?>
-                            </select>
+                            </select> -->
 
                             <select name="estado" class="filter-select">
                                 <option value="">Todos los estados</option>
