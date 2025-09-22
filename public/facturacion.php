@@ -609,12 +609,31 @@ include 'partials/head.php';
                 const data = await response.json();
                 
                 if (data.success && data.productos.length > 0) {
-                    resultsDiv.innerHTML = data.productos.map(p => `
-                        <div class="search-result-item" onclick="seleccionarProducto(${p.id}, '${p.codigo}', '${p.nombre.replace("'", "\\'")}', ${p.precio_venta}, ${p.stock_actual}, ${rowId})">
-                            <strong>${p.codigo}</strong> - ${p.nombre}
-                            <br><small class="text-muted">Precio: $${parseFloat(p.precio_venta).toFixed(2)} | Stock: ${p.stock_actual}</small>
-                        </div>
+                   resultsDiv.innerHTML = data.productos.map(p => `
+                <div class="search-result-item" 
+                     data-id="${p.id}" 
+                     data-codigo="${encodeURIComponent(p.codigo)}" 
+                     data-nombre="${encodeURIComponent(p.nombre)}" 
+                     data-precio="${p.precio_venta}" 
+                     data-stock="${p.stock_actual}" 
+                     data-row="${rowId}">
+                    <strong>${p.codigo}</strong> - ${p.nombre}
+                    <br><small class="text-muted">Precio: $${parseFloat(p.precio_venta).toFixed(2)} | Stock: ${p.stock_actual}</small>
+                </div>
                     `).join('');
+
+                resultsDiv.querySelectorAll('.search-result-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const codigo = decodeURIComponent(this.getAttribute('data-codigo'));
+                    const nombre = decodeURIComponent(this.getAttribute('data-nombre'));
+                    const precio = this.getAttribute('data-precio');
+                    const stock = this.getAttribute('data-stock');
+                    const rowId = this.getAttribute('data-row');
+                    seleccionarProducto(id, codigo, nombre, precio, stock, rowId);
+                    });
+                });
+                
                     resultsDiv.style.display = 'block';
                 } else {
                     resultsDiv.innerHTML = '<div class="search-result-item">No se encontraron productos</div>';
@@ -653,14 +672,11 @@ include 'partials/head.php';
         function seleccionarProducto(id, codigo, nombre, precio, stock, rowId) {
             const input = document.querySelector(`#producto_${rowId} input[type="text"]`);
             input.value = `${codigo} - ${nombre}`;
-            
             document.getElementById(`producto_id_${rowId}`).value = id;
             document.getElementById(`precio_${rowId}`).value = parseFloat(precio).toFixed(2);
             document.getElementById(`stock_${rowId}`).textContent = stock;
-            
             // Ocultar resultados
             document.getElementById(`results_${rowId}`).style.display = 'none';
-            
             // Calcular subtotal
             calcularSubtotal(rowId);
         }
