@@ -314,7 +314,10 @@ $hay_datos = !empty($ventas) || $stats['total_facturas'] > 0;
                     <h1>Ventas</h1>
                     <p>Gestión de facturas y ventas</p>
                 </div>
- <!-- Filtros mejorados -->
+                <button class="btn-primary" onclick="crearNuevaFactura()">
+                            <i class="fas fa-plus"></i> Crear Nueva Factura
+                        </button>
+                <!-- Filtros mejorados -->
                 <div class="filters-bar">
                     <form method="GET" action="" class="filter-form">
                         <div class="filter-group">

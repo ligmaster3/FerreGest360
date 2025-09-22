@@ -240,7 +240,14 @@ include 'partials/head.php';
     <div id="dashboardScreen" class="dashboard-container">
        
         <main class="">
-            <?php include 'partials/header.php'; ?>
+           <a
+            name="Home ventas"
+            id="Id_Home ventas"
+            class="action-btn primary py-3 mb-4"
+            href="ventas.php"
+            role="button"><- Volver
+            </a>
+           
             <div class="content-area">
                 <div class="page-header">
                     <h1><i class="fas fa-file-invoice-dollar"></i> Nueva Factura</h1>
