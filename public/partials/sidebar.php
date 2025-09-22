@@ -53,10 +53,10 @@
             </a>
         </li>
         <li class="nav-item" data-section="reportes">
-            <!-- <a href="reportes.php" class="nav-link" data-target="reportes.php">
+            <a href="reportes.php" class="nav-link" data-target="reportes.php">
                 <i class="fas fa-chart-bar" title="Reportes"></i>
                 <span>Reportes</span>
-            </a> -->
+            </a>
         </li>
 
         <div class="sidebar-footer">
