@@ -516,9 +516,9 @@ include 'partials/head.php';
                                         </td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-edit" title="Editar"
+                                                <!-- <button class="btn-edit" title="Editar"
                                                     onclick="event.preventDefault(); showEditProductModal(<?php echo $producto['id']; ?>)"><i
-                                                        class="fas fa-pencil-alt"></i></button>
+                                                        class="fas fa-pencil-alt"></i></button> -->
                                                 <button class="btn-delete" title="Eliminar"
                                                     onclick="event.preventDefault(); deleteProduct(<?php echo $producto['id']; ?>, '<?php echo htmlspecialchars(addslashes($producto['nombre'])); ?>')"><i
                                                         class="fas fa-trash-alt"></i></button>
