@@ -19,12 +19,13 @@
                         <p>Administra proveedores y pedidos asociados a productos</p>
                     </div>
                     <div class="page-header-right">
-                        <button class="btn btn-primary" onclick="showAddProviderModal()">
-                            <i class="fas fa-plus"></i> Nuevo Proveedor
-                        </button>
-                        <button class="btn btn-success" onclick="showAddOrderModal()">
+                        <button class="action-btn secondary btn" onclick="showAddProviderModal()">
+                                <i class="fas fa-truck"></i>
+                                <span>Nuevo Proveedor</span>
+                            </button>
+                        <!-- <button class="btn btn-success" onclick="showAddOrderModal()">
                             <i class="fas fa-shopping-cart"></i> Nuevo Pedido
-                        </button>
+                        </button> -->
                     </div>
                 </div>
 
@@ -60,9 +61,9 @@
                             </div>
 
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary w-100">
+                                <!-- <button type="submit" class="btn btn-primary w-100">
                                     <i class="fas fa-link"></i> Asignar
-                                </button>
+                                </button> -->
                             </div>
                         </form>
                     </div>
@@ -315,9 +316,6 @@
             alert('Función para mostrar modal de nuevo pedido no implementada.');
         }
 
-        function showAddProviderModal() {
-            alert('Función para mostrar modal de nuevo proveedor no implementada.');
-        }
 
         function verDetalleProveedor(proveedorId) {
             // Crear modal dinámico para mostrar detalles del proveedor
