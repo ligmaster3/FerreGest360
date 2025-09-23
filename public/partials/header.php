@@ -17,10 +17,10 @@
         </button>
     </div>
     <div class="header-right">
-        <button class="notification-btn">
+        <!-- <button class="notification-btn">
             <i class="fas fa-bell"></i>
             <span class="notification-badge">3</span>
-        </button>
+        </button> -->
         <div class="current-date">
             <span id="currentDate"></span>
         </div>
